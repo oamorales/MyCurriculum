@@ -49,7 +49,7 @@ public class DegreesAdapter extends BaseAdapter {
         ViewHolder holder;
 
         if (convertView==null) {
-            convertView = LayoutInflater.from(context).inflate(this.layout, null);
+                convertView = LayoutInflater.from(context).inflate(this.layout, null);
             holder = new ViewHolder();
             holder.imageViewDegree = convertView.findViewById(R.id.degreesListViewImage);
             holder.textViewDegree = convertView.findViewById(R.id.degreesListViewText);
