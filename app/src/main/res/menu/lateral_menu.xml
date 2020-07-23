@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group1">
+        <item
+            android:id="@+id/personInfoFragment"
+            android:icon="@drawable/ic_lateral_menu_personal"
+            android:title="@string/personal_info" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group2">
+        <item
+            android:id="@+id/degreesFragment"
+            android:icon="@drawable/ic_lateral_menu_degrees"
+            android:title="@string/degrees" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group3">
+        <item
+            android:id="@+id/workExpFragment"
+            android:icon="@drawable/ic_lateral_menu_working_experience"
+            android:title="@string/working_experience" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group4">
+        <item
+            android:id="@+id/languagesFragment"
+            android:icon="@drawable/ic_lateral_menu_languages"
+            android:title="@string/languages" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group5">
+        <item
+            android:id="@+id/skillsFragment"
+            android:icon="@drawable/ic_lateral_menu_skills"
+            android:title="@string/skills" />
+    </group>
+
+</menu>

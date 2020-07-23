@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/generalDataFragment">
+    <fragment
+        android:id="@+id/generalDataFragment"
+        android:name="com.oamorales.myresume.fragments.GeneralDataFragment"
+        android:label="fragment_general_data"
+        tools:layout="@layout/fragment_general_data" >
+        <action
+            android:id="@+id/action_generalDataFragment_to_personInfoFragment"
+            app:destination="@id/personInfoFragment" />
+        <action
+            android:id="@+id/action_generalDataFragment_to_degreesFragment"
+            app:destination="@id/degreesFragment" />
+        <action
+            android:id="@+id/action_generalDataFragment_to_workExpFragment"
+            app:destination="@id/workExpFragment" />
+        <action
+            android:id="@+id/action_generalDataFragment_to_languagesFragment"
+            app:destination="@id/languagesFragment" />
+        <action
+            android:id="@+id/action_generalDataFragment_to_skillsFragment"
+            app:destination="@id/skillsFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_personInfoFragment" app:destination="@id/generalDataFragment" />
+    <fragment
+        android:id="@+id/personInfoFragment"
+        android:name="com.oamorales.myresume.fragments.PersonInfoFragment"
+        android:label="fragment_person_info"
+        tools:layout="@layout/fragment_person_info" >
+        <action
+            android:id="@+id/action_personInfoFragment_to_personInfoEditFragment"
+            app:destination="@id/personInfoEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/degreesFragment"
+        android:name="com.oamorales.myresume.fragments.DegreesFragment"
+        android:label="@string/degrees"
+        tools:layout="@layout/fragment_degrees">
+        <action
+            android:id="@+id/action_degreesFragment_to_degreeDetailsFragment"
+            app:destination="@id/degreeDetailsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit" />
+        <action
+            android:id="@+id/action_degreesFragment_to_newDegreeFragment"
+            app:destination="@id/newDegreeFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/degreeDetailsFragment"
+        android:name="com.oamorales.myresume.fragments.DegreeDetailsFragment"
+        android:label="fragment_degree_details"
+        tools:layout="@layout/fragment_degree_details" >
+        <argument
+            android:name="degree_tittle"
+            app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/languagesFragment"
+        android:name="com.oamorales.myresume.fragments.LanguagesFragment"
+        android:label="@string/languages"
+        tools:layout="@layout/fragment_languages" />
+    <fragment
+        android:id="@+id/workExpFragment"
+        android:name="com.oamorales.myresume.fragments.WorkExpFragment"
+        android:label="@string/working_experience"
+        tools:layout="@layout/fragment_work_exp" />
+    <fragment
+        android:id="@+id/skillsFragment"
+        android:name="com.oamorales.myresume.fragments.SkillsFragment"
+        android:label="@string/skills"
+        tools:layout="@layout/fragment_skills" />
+    <fragment
+        android:id="@+id/newDegreeFragment"
+        android:name="com.oamorales.myresume.fragments.NewDegreeFragment"
+        android:label="fragment_new_degree"
+        tools:layout="@layout/fragment_new_degree" />
+    <fragment
+        android:id="@+id/personInfoEditFragment"
+        android:name="com.oamorales.myresume.fragments.PersonInfoEditFragment"
+        android:label="Person Info Edit"
+        tools:layout="@layout/fragment_person_info_edit" />
+
+</navigation>

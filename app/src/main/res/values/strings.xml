@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Mi Currículum</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="personal_info">Datos personales</string>
+    <string name="degrees">Estudios realizados</string>
+    <string name="working_experience">Experiencia laboral</string>
+    <string name="my_name">Oscar Morales</string>
+    <string name="degree">Ingeniero en Informática</string>
+    <string name="profesion">Desarrollador de Aplicaciones Android Nativas</string>
+    <string name="address">Dirección </string>
+    <string name="cellphone">Tlf: xxx-xx-xx </string>
+    <string name="social_media">Redes sociales</string>
+    <string name="languages">Idiomas</string>
+    <string name="skills">Habilidades</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="language_level_1">Básico</string>
+    <string name="language_level_2">Básico limitado</string>
+    <string name="language_level_3">Básico profesional</string>
+    <string name="language_level_4">Profesional completo</string>
+    <string name="language_level_5">Bilingüe o nativo</string>
+
+</resources>
