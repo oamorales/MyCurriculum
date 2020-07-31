@@ -14,11 +14,11 @@ public class Degree extends RealmObject {
     private String discipline;
     private int yearBegin;
     private int yearEnd;
-    private float gradeAverage;
+    private double gradeAverage;
 
     public Degree() {  }
 
-    public Degree(int imageLogo, String degreeTittle, String university, String discipline, int yearBegin, int yearEnd, float gradeAverage) {
+    public Degree(int imageLogo, String degreeTittle, String university, String discipline, int yearBegin, int yearEnd, double gradeAverage) {
         this.id = MyApplication.degreeId.incrementAndGet();
         this.imageLogo = imageLogo;
         this.degreeTittle = degreeTittle;
@@ -81,7 +81,7 @@ public class Degree extends RealmObject {
         this.yearEnd = yearEnd;
     }
 
-    public float getGradeAverage() {
+    public double getGradeAverage() {
         return gradeAverage;
     }
 

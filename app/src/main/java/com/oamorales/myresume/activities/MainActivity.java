@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
         /** PARAMETROS INICIALES BD */
         realm = Realm.getDefaultInstance();
         Degree usbDegree = new Degree(R.drawable.usb_logo,"T.S.U en Electrónica","USB",
-                "TECNOLOGIA", 2004, 2008, 4.5F);
+                "TECNOLOGIA", 2004, 2008, 5);
         Degree iutomsDegree = new Degree(R.drawable.iutoms_logo,"Ingeniero en Informática", "IUTOMS",
                 "TECNOLOGIA", 2010, 2013, 19);
         Degree usbDegree2 = new Degree(R.drawable.usb_logo,"T.S.U en Administración","USB",
