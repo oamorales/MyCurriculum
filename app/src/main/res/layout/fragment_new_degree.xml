@@ -13,10 +13,10 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/newDegreeLogo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="80dp"
-            android:background="#F0F0F0"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/colorImagesBckgnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
