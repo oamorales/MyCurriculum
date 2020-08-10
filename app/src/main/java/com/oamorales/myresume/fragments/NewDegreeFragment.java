@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
@@ -28,14 +26,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.oamorales.myresume.R;
+import com.oamorales.myresume.databinding.FragmentNewDegreeBinding;
 import com.oamorales.myresume.models.Degree;
 import com.squareup.picasso.Picasso;
 
@@ -51,12 +47,8 @@ import io.realm.Realm;
 
 public class NewDegreeFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener{
 
+    private FragmentNewDegreeBinding binding;
     private Realm realm;
-    private TextInputEditText newDegreeTittle, newDegreeUniversity,
-            newDegreeDiscipline, newDegreeAverage ;
-    private AutoCompleteTextView newDegreeYearEnd, newDegreeYearBegin;
-    private MaterialButton saveBtn;
-    private AppCompatImageView newDegreeLogo;
     private int yearB, yearE;
 
     private final String MEDIA_DIRECTORY = "curriculumFiles/" + "media";
@@ -67,7 +59,9 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
     private List<Integer> years = new ArrayList<>();
     private final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1000;
 
-    private String absolutePath;
+    //Variable para la ruta de la imagen a guardar
+    private String currentPhotoPath;
+    private List<String> photoToDiscardPath = new ArrayList<>();
     private Uri imageUri;
 
     public NewDegreeFragment() {
@@ -83,45 +77,42 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_new_degree, container, false);
-        setID(view);
+        binding = FragmentNewDegreeBinding.inflate(inflater, container,false);
+        View view = binding.getRoot();
         int year = 2020;
         for (int i = 0; i<15; i++){
             years.add(year);
             year--;
         }
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(requireContext(), R.layout.degrees_list_years, years);
-        newDegreeYearBegin.setAdapter(adapter);
-        newDegreeYearEnd.setAdapter(adapter);
+        binding.newDegreeYearBegin.setAdapter(adapter);
+        binding.newDegreeYearEnd.setAdapter(adapter);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //super.onViewCreated(view, savedInstanceState);
-        saveBtn.setOnClickListener(this);
-        newDegreeDiscipline.setOnEditorActionListener(this);
-        newDegreeTittle.setOnEditorActionListener(this);
-        newDegreeUniversity.setOnEditorActionListener(this);
-        newDegreeAverage.setOnEditorActionListener(this);
-
-        newDegreeYearBegin.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.saveBtn.setOnClickListener(this);
+        binding.newDegreeDiscipline.setOnEditorActionListener(this);
+        binding.newDegreeTitle.setOnEditorActionListener(this);
+        binding.newDegreeUniversity.setOnEditorActionListener(this);
+        binding.newDegreeGradeAverage.setOnEditorActionListener(this);
+        binding.newDegreeYearBegin.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                newDegreeYearBegin.setError(null);
+                binding.newDegreeYearBegin.setError(null);
                 yearB = years.get(position);
             }
         });
-
-        newDegreeYearEnd.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.newDegreeYearEnd.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                newDegreeYearEnd.setError(null);
+                binding.newDegreeYearEnd.setError(null);
                 yearE = years.get(position);
             }
         });
-
-        newDegreeLogo.setOnClickListener(new View.OnClickListener() {
+        binding.newDegreeLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openMediaStore();
@@ -129,54 +120,39 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
         });
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        realm.close();
-    }
-
-    private void setID(View view){
-        newDegreeLogo = view.findViewById(R.id.newDegreeLogo);
-        newDegreeTittle = view.findViewById(R.id.newDegreeTitle);
-        newDegreeUniversity = view.findViewById(R.id.newDegreeUniversity);
-        newDegreeDiscipline = view.findViewById(R.id.newDegreeDiscipline);
-        newDegreeYearBegin = view.findViewById(R.id.newDegreeYearBegin);
-        newDegreeYearEnd = view.findViewById(R.id.newDegreeYearEnd);
-        newDegreeAverage = view.findViewById(R.id.newDegreeGradeAverage);
-        saveBtn = view.findViewById(R.id.saveBtn);
-
-    }
-
     /** Evento botón guardar */
     @Override
     public void onClick(View v) {
-        String tittle = Objects.requireNonNull(newDegreeTittle.getText()).toString();
-        String university = Objects.requireNonNull(newDegreeUniversity.getText()).toString();
-        String discipline = Objects.requireNonNull(newDegreeDiscipline.getText()).toString();
-        String gradeAverage = Objects.requireNonNull(newDegreeAverage.getText()).toString();
+        String tittle = Objects.requireNonNull(binding.newDegreeTitle.getText()).toString();
+        String university = Objects.requireNonNull(binding.newDegreeUniversity.getText()).toString();
+        String discipline = Objects.requireNonNull(binding.newDegreeDiscipline.getText()).toString();
+        String gradeAverage = Objects.requireNonNull(binding.newDegreeGradeAverage.getText()).toString();
 
+        //Se guardan los datos si no hay campos vacíos
         if (!tittle.isEmpty() && !university.isEmpty() && !discipline.isEmpty()
                 && !gradeAverage.isEmpty() && yearB!=0 && yearE!=0){
             if (yearE >= yearB){
-
+                //Se guarda el nuevo degree
                 Degree newDegree = new Degree(R.drawable.usb_logo,tittle, university, discipline, yearB, yearE, Double.parseDouble(gradeAverage));
                 realm.beginTransaction();
                 realm.copyToRealmOrUpdate(newDegree);
                 realm.commitTransaction();
+                //Asegurar que se guarde la imagen
+                currentPhotoPath = null;
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
                 requireActivity().onBackPressed();
             }else{
-                newDegreeYearBegin.setError("invalid");
-                newDegreeYearEnd.setError("invalid");
+                binding.newDegreeYearBegin.setError("invalid");
+                binding.newDegreeYearEnd.setError("invalid");
             }
 
         }else{
-            newDegreeTittle.setError(tittle.isEmpty() ? "required" : null);
-            newDegreeUniversity.setError(university.isEmpty() ? "required" : null);
-            newDegreeDiscipline.setError(discipline.isEmpty() ? "required" : null);
-            newDegreeAverage.setError(gradeAverage.isEmpty() ? "required" : null);
-            newDegreeYearBegin.setError((yearB == 0) ? "required" : null);
-            newDegreeYearEnd.setError((yearE == 0) ? "required" : null);
+            binding.newDegreeTitle.setError(tittle.isEmpty() ? "required" : null);
+            binding.newDegreeUniversity.setError(university.isEmpty() ? "required" : null);
+            binding.newDegreeDiscipline.setError(discipline.isEmpty() ? "required" : null);
+            binding.newDegreeGradeAverage.setError(gradeAverage.isEmpty() ? "required" : null);
+            binding.newDegreeYearBegin.setError((yearB == 0) ? "required" : null);
+            binding.newDegreeYearEnd.setError((yearE == 0) ? "required" : null);
         }
     }
 
@@ -190,10 +166,10 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
     /** newDegreeLogo Click event */
     private void openMediaStore(){
         if (!isExternalStorageWritable()){
-            Snackbar.make(newDegreeLogo, "Memory Access Denied", Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show();
+            Snackbar.make(binding.newDegreeLogo, "Memory Access Denied", Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show();
         }else{
             if (haveStoragePermission()){
-                pickImage();
+                selectAction();
             }else{
                 requestPermission();
             }
@@ -231,11 +207,11 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
         switch (requestCode){
             case WRITE_EXTERNAL_STORAGE_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    pickImage();
+                    selectAction();
                 }else {
                     boolean showRationale = shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE);
                     if (showRationale){
-                        Snackbar.make(newDegreeLogo,"Debe habilitar permiso al almacenamiento para poder cargar el logo", Snackbar.LENGTH_LONG)
+                        Snackbar.make(binding.newDegreeLogo,"Debe habilitar permiso al almacenamiento para poder cargar el logo", Snackbar.LENGTH_LONG)
                                 .show();
                     }else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
@@ -260,8 +236,8 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
         startActivity(intent);
     }
 
-    /** Pick image logo */
-    private void pickImage(){
+    /** Select between gallery and camera action  */
+    private void selectAction(){
         final String gallery = "Galería", camera = "Cámara", cancel = "Cancel";
         final CharSequence[] items = {gallery, camera, cancel};
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
@@ -280,49 +256,44 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
                 }).show();
     }
 
+    /** Pick an image from gallery */
     private void selectFromGallery(){
         Intent in = new Intent(Intent.ACTION_PICK);
+        //Intent in = new Intent(Intent.ACTION_GET_CONTENT);
         in.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
         startActivityForResult(Intent.createChooser(in, "Seleccione aplicación"), GALLERY_REQUEST_CODE);
     }
 
-
+    /** Take a picture using camera app */
     private void takePicture() {
-        //SE CREA LA CARPETA PARA ALMACENAR LAS IMÁGENES
-        String mainPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+ "/curriculum_images";
-        long suffix = System.currentTimeMillis()/1000;
-        absolutePath = mainPath + File.separator + "img_" + suffix + ".png";
-        File newFolder = new File(mainPath);
-        if (!newFolder.exists()){
-            newFolder.mkdir();
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(requireActivity().getPackageManager()) != null){
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            }catch (IOException e){
+                Snackbar.make(binding.newDegreeLogo, "Error while creating image", Snackbar.LENGTH_LONG);
+            }
+            if (photoFile != null){
+                imageUri = FileProvider.getUriForFile(requireContext(), "com.oamorales.myresume.provider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
+            }
         }
-        File imageFile = new File(absolutePath);
-        imageUri = FileProvider.getUriForFile(requireContext(), "com.oamorales.myresume.provider", imageFile);
+    }
 
-
-        /*SimpleDateFormat sdf =  (SimpleDateFormat) SimpleDateFormat.getDateTimeInstance();
-        SimpleDateFormat format = (SimpleDateFormat) SimpleDateFormat.getDateTimeInstance();
-        String dt = sdf.format(new Date());*/
-
-        //RUTA DONDE SE ALMACENA LA IMAGEN TOMADA
-        //File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        //absolutePath = path.getAbsolutePath() + "/curriculum_images/" + "img_prueba_"+ dt +".png";
-        //File imageFile = new File(path.getAbsolutePath() + "/curriculum_images", "img_prueba_"+ dt +".png");
-        //Uri imageUri = FileProvider.getUriForFile(requireContext(), "com.oamorales.myresume.provider", imageFile);
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Intent in = new Intent(Intent.ACTION_GET_CONTENT);
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        if (intent.resolveActivity(requireActivity().getPackageManager()) != null)
-            startActivityForResult(intent, CAMERA_REQUEST_CODE);
-        else
-            Snackbar.make(newDegreeLogo,"Imposible tomar foto", Snackbar.LENGTH_SHORT).show();
-
-        /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (intent.resolveActivity(requireActivity().getPackageManager()) != null)
-            startActivityForResult(intent, CAMERA_REQUEST_CODE);
-        else
-            Snackbar.make(newDegreeLogo,"Imposible tomar foto", Snackbar.LENGTH_SHORT).show();*/
+    /** Empty image file instance */
+    private File createImageFile() throws IOException{
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        assert storageDir != null;
+        String imageFileName = storageDir.getAbsolutePath() + File.separator + "img_" + timeStamp + "_" + ".jpg";
+        File image = new File(imageFileName);
+        if (currentPhotoPath != null)
+            photoToDiscardPath.add(currentPhotoPath);
+        //Se obtiene la ruta de la nueva imagen
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
     /** Executed after select or capture image */
@@ -333,16 +304,20 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
                 if (resultCode== AppCompatActivity.RESULT_OK){
                     assert data != null;
                     //Picasso.get().load(data.getData()).fit().into(newDegreeLogo);
-                    Picasso.get().load(data.getDataString()).fit().into(newDegreeLogo);
+                    Picasso.get().load(data.getDataString()).fit().into(binding.newDegreeLogo);
+
+                    String imgPath = Objects.requireNonNull(data.getData()).getPath();
+                    Uri imgUri = data.getData();
                 }else{
-                    Snackbar.make(newDegreeLogo, "FALLO AL OBTENER IMAGEN", Snackbar.LENGTH_SHORT);
+                    Snackbar.make(binding.newDegreeLogo, "FALLO AL OBTENER IMAGEN", Snackbar.LENGTH_SHORT);
                 }
                 return;
             case CAMERA_REQUEST_CODE:
                 if (resultCode== AppCompatActivity.RESULT_OK){
-                    Picasso.get().load(imageUri).fit().into(newDegreeLogo);
+                    Picasso.get().load(this.imageUri).fit().into(binding.newDegreeLogo);
                 }else{
-                    Snackbar.make(newDegreeLogo,"Error al tomar foto",Snackbar.LENGTH_SHORT);
+                    currentPhotoPath = null;
+                    Toast.makeText(requireContext(), "Error al tomar foto", Toast.LENGTH_SHORT).show();
                 }
             default:
                 super.onActivityResult(requestCode, resultCode, data);
@@ -351,26 +326,26 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
 
     private void decodeBitmap(Bundle bundle) {
         Bitmap imageBitmap = (Bitmap) bundle.get("data");
-        newDegreeLogo.setBackground(null);
-        newDegreeLogo.setImageBitmap(imageBitmap);
+        binding.newDegreeLogo.setBackground(null);
+        binding.newDegreeLogo.setImageBitmap(imageBitmap);
     }
 
-    private void loadImage(){
-        //File newPicture = new File(Environment.getExternalStorageDirectory().getPath() + "image1" + ".png");
-        //MEDIA_DIRECTORY = "curriculumFiles/" + "media";
-        // TEMPORAL_PICTURE_NAME = "temporal.jpg";
 
-        File imgFile = new File(Environment.getExternalStorageDirectory() + MEDIA_DIRECTORY);
-        /*File file = new File(Environment.getExternalStoragePublicDirectory(), MEDIA_DIRECTORY);
-        file.mkdirs();*/
-        //dirección temporal donde se almacena la foto tomada
-        String path = Environment.getExternalStorageDirectory() + File.separator + MEDIA_DIRECTORY
-                + File.separator + TEMPORAL_PICTURE_NAME;
+    private boolean discardImage(String path){
+        File file = new File(path);
+        return file.delete();
+    }
 
-        File newFile = new File(path);
+    @Override
+    public void onDestroy() {
 
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(newFile));
-        startActivityForResult(intent, CAMERA_REQUEST_CODE);
+        realm.close();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
