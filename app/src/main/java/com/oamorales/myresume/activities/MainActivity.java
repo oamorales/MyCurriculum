@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
     private NavigationView navView;
     private DrawerLayout drawerLayout;
     private NavController navController;
-    private Realm realm;
     private AppBarConfiguration appBarConfiguration;
     //private AppBarLayout toolbar;
     private MaterialToolbar toolbar;
@@ -42,25 +41,6 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
         drawerLayout = findViewById(R.id.drawerLayout);
         navView = findViewById(R.id.navigationView);
         navController = Navigation.findNavController(this, R.id.navHostFragment);
-
-
-        /** PARAMETROS INICIALES BD */
-        realm = Realm.getDefaultInstance();
-        Degree usbDegree = new Degree(R.drawable.usb_logo,"T.S.U en Electrónica","USB",
-                "TECNOLOGIA", 2004, 2008, 5);
-        Degree iutomsDegree = new Degree(R.drawable.iutoms_logo,"Ingeniero en Informática", "IUTOMS",
-                "TECNOLOGIA", 2010, 2013, 19);
-        Degree usbDegree2 = new Degree(R.drawable.usb_logo,"T.S.U en Administración","USB",
-                "TECNOLOGIA", 2008, 2010, 4);
-        Degree iutomsDegree2 = new Degree(R.drawable.iutoms_logo,"Ingeniero Eléctrico", "IUTOMS",
-                "TECNOLOGIA", 2013, 2015, 18);
-        realm.beginTransaction();
-        realm.deleteAll();
-        realm.copyToRealmOrUpdate(usbDegree);
-        realm.copyToRealmOrUpdate(iutomsDegree);
-        realm.copyToRealmOrUpdate(usbDegree2);
-        realm.copyToRealmOrUpdate(iutomsDegree2);
-        realm.commitTransaction();
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
                 .setOpenableLayout(drawerLayout).build();
@@ -93,9 +73,7 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_lateral_menu);
         //Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_lateral_menu);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
-
 
 
     /** Habilitar función del botón de Navegación. Open Drawer */
@@ -118,69 +96,6 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
         }
     }*/
 
-    /*private void changeFragment(Fragment fragment, MenuItem item){
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.mainFrameLayout,fragment)
-                .addToBackStack(null).setReorderingAllowed(true)
-                .commit();
-        getSupportActionBar().setTitle(item.getTitle());
-        item.setChecked(true);
-    }*/
-
-    /*@Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment fragment = null;
-        boolean fragmentTransaction = false;
-        Intent i;
-        NavDirections action;
-        switch (item.getItemId()){
-            case R.id.personInfoMenu:
-                fragment = new PersonInfoFragment();
-                fragmentTransaction = true;
-                break;
-            case R.id.degreesFragment:
-                //fragment = new DegreesFragment();
-                //fragmentTransaction = true;
-                drawerLayout.closeDrawers();
-                *//*i = new Intent(this,DegreesActivity.class);
-                startActivity(i);*//*
-                action = PersonInfoFragmentDirections.actionPersonInfoFragmentToDegreesFragment();
-                Navigation.findNavController(this, R.id.navHostFragment).navigate(action);
-                break;
-            case R.id.workExpMenu:
-                //fragment = new WorkExpFragment();
-                //fragmentTransaction = true;
-                drawerLayout.closeDrawers();
-                *//*action = PersonInfoFragmentDirections.actionPersonInfoFragmentToWorkExpActivity();
-                Navigation.findNavController(this, R.id.navHostFragment).navigate(action);*//*
-                *//*i = new Intent(this,WorkExpActivity.class);
-                startActivity(i);*//*
-                break;
-            case R.id.languagesMenu:
-                //fragment = new LanguagesFragment();
-                fragmentTransaction = true;
-                drawerLayout.closeDrawers();
-                *//*action = PersonInfoFragmentDirections.actionPersonInfoFragmentToLanguagesActivity();
-                Navigation.findNavController(this, R.id.navHostFragment).navigate(action);*//*
-                //i = new Intent(this,LanguagesActivity.class);
-                //startActivity(i);
-                break;
-            case R.id.skillsMenu:
-                fragment = new SkillsFragment();
-                //fragmentTransaction = true;
-                drawerLayout.closeDrawers();
-                *//*action = PersonInfoFragmentDirections.actionPersonInfoFragmentToSkillsActivity();
-                Navigation.findNavController(this, R.id.navHostFragment).navigate(action);*//*
-                *//*i = new Intent(this,SkillsActivity.class);
-                startActivity(i);*//*
-                break;
-        }
-        if (fragmentTransaction){
-            //changeFragment(fragment,item);
-            drawerLayout.closeDrawers();
-        }
-        return true;
-    }*/
 
     /*@Override
         public void onBackPressed() {
@@ -201,14 +116,7 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
                     })
                     .setNegativeButton("No",null);
             dialog.show();
-
         }*/
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        realm.close();
-    }
 
     /*@Override
     protected void onResume() {

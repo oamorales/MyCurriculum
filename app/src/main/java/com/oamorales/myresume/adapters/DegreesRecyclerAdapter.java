@@ -35,13 +35,11 @@ public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecycle
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(this.layout, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //holder.bind(list.get(position).getDegreeTittle(),list.get(position).getImageLogo());
         holder.bind(list.get(position).getDegreeTittle(),list.get(position).getImgPath());
     }
 
@@ -49,6 +47,7 @@ public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecycle
     public int getItemCount() {
         return this.list.size();
     }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -63,7 +62,6 @@ public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecycle
 
         public void bind(String text, String logoResource){
             this.textViewDegree.setText(text);
-            //Picasso.get().load(logoResource).fit().into(this.imageViewDegree);
             if (logoResource!= null){
                 Uri uri = Uri.fromFile(new File(logoResource));
                 Picasso.get().load(uri).fit().into(this.imageViewDegree);
@@ -72,7 +70,6 @@ public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecycle
             /** Se crea la acción para cambiar de fragment y se pasan los parámetros */
             DegreesFragmentDirections.ActionDegreesFragmentToDegreeDetailsFragment directions = DegreesFragmentDirections
                     .actionDegreesFragmentToDegreeDetailsFragment(textViewDegree.getText().toString());
-
             itemView.setOnClickListener(Navigation.createNavigateOnClickListener(directions));
         }
     }

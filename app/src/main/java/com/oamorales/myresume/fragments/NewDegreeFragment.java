@@ -142,7 +142,6 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
                 && !gradeAverage.isEmpty() && yearB!=0 && yearE!=0){
             if (yearE >= yearB){
                 //Se guarda el nuevo degree
-                //Degree newDegree = new Degree(R.drawable.usb_logo,tittle, university, discipline, yearB, yearE, Double.parseDouble(gradeAverage));
                 Degree newDegree = new Degree(currentPhotoPath,tittle, university, discipline, yearB, yearE, Double.parseDouble(gradeAverage));
                 DBManager.insert(newDegree, requireContext());
                 //Evitar que la imagen sea eliminada
