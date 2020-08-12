@@ -1,6 +1,7 @@
 package com.oamorales.myresume.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.oamorales.myresume.fragments.DegreesFragmentDirections;
 import com.oamorales.myresume.models.Degree;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecyclerAdapter.ViewHolder> {
@@ -39,7 +41,8 @@ public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecycle
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(list.get(position).getDegreeTittle(),list.get(position).getImageLogo());
+        //holder.bind(list.get(position).getDegreeTittle(),list.get(position).getImageLogo());
+        holder.bind(list.get(position).getDegreeTittle(),list.get(position).getImgPath());
     }
 
     @Override
@@ -58,9 +61,13 @@ public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecycle
             this.imageViewDegree = itemView.findViewById(R.id.degreesListViewImage);
         }
 
-        public void bind(String text, int logoResource){
+        public void bind(String text, String logoResource){
             this.textViewDegree.setText(text);
-            Picasso.get().load(logoResource).fit().into(this.imageViewDegree);
+            //Picasso.get().load(logoResource).fit().into(this.imageViewDegree);
+            if (logoResource!= null){
+                Uri uri = Uri.fromFile(new File(logoResource));
+                Picasso.get().load(uri).fit().into(this.imageViewDegree);
+            }
 
             /** Se crea la acción para cambiar de fragment y se pasan los parámetros */
             DegreesFragmentDirections.ActionDegreesFragmentToDegreeDetailsFragment directions = DegreesFragmentDirections

@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -33,6 +34,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.oamorales.myresume.R;
 import com.oamorales.myresume.databinding.FragmentNewDegreeBinding;
 import com.oamorales.myresume.models.Degree;
+import com.oamorales.myresume.utils.DBManager;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -48,7 +50,6 @@ import io.realm.Realm;
 public class NewDegreeFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener{
 
     private FragmentNewDegreeBinding binding;
-    private Realm realm;
     private int yearB, yearE;
 
     private final String MEDIA_DIRECTORY = "curriculumFiles/" + "media";
@@ -71,7 +72,9 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        realm = Realm.getDefaultInstance();
+        //Recuperar imagen tomada
+        if (savedInstanceState != null)
+            currentPhotoPath = savedInstanceState.getString("IMAGE_PATH");
     }
 
     @Override
@@ -84,15 +87,20 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
             years.add(year);
             year--;
         }
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(requireContext(), R.layout.degrees_list_years, years);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(requireContext(), R.layout.degrees_list_years, years);
         binding.newDegreeYearBegin.setAdapter(adapter);
         binding.newDegreeYearEnd.setAdapter(adapter);
+
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //super.onViewCreated(view, savedInstanceState);
+        super.onViewCreated(view, savedInstanceState);
+        if (currentPhotoPath!=null){
+            Uri uri = Uri.fromFile(new File(currentPhotoPath));
+            Picasso.get().load(uri).fit().into(binding.newDegreeLogo);
+        }
         binding.saveBtn.setOnClickListener(this);
         binding.newDegreeDiscipline.setOnEditorActionListener(this);
         binding.newDegreeTitle.setOnEditorActionListener(this);
@@ -120,6 +128,7 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
         });
     }
 
+
     /** Evento botón guardar */
     @Override
     public void onClick(View v) {
@@ -133,11 +142,10 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
                 && !gradeAverage.isEmpty() && yearB!=0 && yearE!=0){
             if (yearE >= yearB){
                 //Se guarda el nuevo degree
-                Degree newDegree = new Degree(R.drawable.usb_logo,tittle, university, discipline, yearB, yearE, Double.parseDouble(gradeAverage));
-                realm.beginTransaction();
-                realm.copyToRealmOrUpdate(newDegree);
-                realm.commitTransaction();
-                //Asegurar que se guarde la imagen
+                //Degree newDegree = new Degree(R.drawable.usb_logo,tittle, university, discipline, yearB, yearE, Double.parseDouble(gradeAverage));
+                Degree newDegree = new Degree(currentPhotoPath,tittle, university, discipline, yearB, yearE, Double.parseDouble(gradeAverage));
+                DBManager.insert(newDegree, requireContext());
+                //Evitar que la imagen sea eliminada
                 currentPhotoPath = null;
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
                 requireActivity().onBackPressed();
@@ -145,7 +153,6 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
                 binding.newDegreeYearBegin.setError("invalid");
                 binding.newDegreeYearEnd.setError("invalid");
             }
-
         }else{
             binding.newDegreeTitle.setError(tittle.isEmpty() ? "required" : null);
             binding.newDegreeUniversity.setError(university.isEmpty() ? "required" : null);
@@ -258,8 +265,8 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
 
     /** Pick an image from gallery */
     private void selectFromGallery(){
-        Intent in = new Intent(Intent.ACTION_PICK);
-        //Intent in = new Intent(Intent.ACTION_GET_CONTENT);
+        //Intent in = new Intent(Intent.ACTION_PICK);
+        Intent in = new Intent(Intent.ACTION_GET_CONTENT);
         in.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
         startActivityForResult(Intent.createChooser(in, "Seleccione aplicación"), GALLERY_REQUEST_CODE);
     }
@@ -330,16 +337,23 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
         binding.newDegreeLogo.setImageBitmap(imageBitmap);
     }
 
-
     private boolean discardImage(String path){
         File file = new File(path);
         return file.delete();
     }
 
     @Override
-    public void onDestroy() {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("IMAGE_PATH", currentPhotoPath);
+        super.onSaveInstanceState(outState);
+    }
 
-        realm.close();
+
+    @Override
+    public void onDestroy() {
+        for (String path: photoToDiscardPath) {
+            discardImage(path);
+        }
         super.onDestroy();
     }
 
@@ -348,4 +362,5 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
         super.onDestroyView();
         binding = null;
     }
+
 }

@@ -9,6 +9,7 @@ public class Degree extends RealmObject {
     @PrimaryKey
     private int id;
     private int imageLogo;
+    private String imgPath;
     private String degreeTittle;
     private String university;
     private String discipline;
@@ -29,6 +30,17 @@ public class Degree extends RealmObject {
         this.gradeAverage = gradeAverage;
     }
 
+    public Degree(String imgPath, String degreeTittle, String university, String discipline, int yearBegin, int yearEnd, double gradeAverage) {
+        this.id = MyApplication.degreeId.incrementAndGet();
+        this.imgPath = imgPath;
+        this.degreeTittle = degreeTittle;
+        this.university = university;
+        this.discipline = discipline;
+        this.yearBegin = yearBegin;
+        this.yearEnd = yearEnd;
+        this.gradeAverage = gradeAverage;
+    }
+
     public int getId() {
         return id;
     }
@@ -40,6 +52,10 @@ public class Degree extends RealmObject {
     public void setImageLogo(int imageLogo) {
         this.imageLogo = imageLogo;
     }
+
+    public String getImgPath() { return imgPath; }
+
+    public void setImgPath(String imgPath) { this.imgPath = imgPath; }
 
     public String getDegreeTittle() {
         return degreeTittle;
