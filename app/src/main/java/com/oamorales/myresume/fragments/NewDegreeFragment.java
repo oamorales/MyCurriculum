@@ -35,6 +35,7 @@ import com.oamorales.myresume.R;
 import com.oamorales.myresume.databinding.FragmentNewDegreeBinding;
 import com.oamorales.myresume.models.Degree;
 import com.oamorales.myresume.utils.DBManager;
+import com.oamorales.myresume.utils.EditImage;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -61,7 +62,7 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
     private final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1000;
 
     //Variable para la ruta de la imagen a guardar
-    private String currentPhotoPath;
+    private String currentPhotoPath, currentGalleryPath;
     private List<String> photoToDiscardPath = new ArrayList<>();
     private Uri imageUri;
 
@@ -73,8 +74,10 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Recuperar imagen tomada
-        if (savedInstanceState != null)
-            currentPhotoPath = savedInstanceState.getString("IMAGE_PATH");
+        if (savedInstanceState != null) {
+            currentPhotoPath = savedInstanceState.getString("PHOTO_PATH");
+            currentGalleryPath = savedInstanceState.getString("GALLERY_PATH");
+        }
     }
 
     @Override
@@ -100,6 +103,9 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
         if (currentPhotoPath!=null){
             Uri uri = Uri.fromFile(new File(currentPhotoPath));
             Picasso.get().load(uri).fit().into(binding.newDegreeLogo);
+        }else if (currentGalleryPath!=null){
+            //Uri uri = Uri.fromFile(new File(currentGalleryPath));
+            Picasso.get().load(currentGalleryPath).fit().into(binding.newDegreeLogo);
         }
         binding.saveBtn.setOnClickListener(this);
         binding.newDegreeDiscipline.setOnEditorActionListener(this);
@@ -264,7 +270,6 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
 
     /** Pick an image from gallery */
     private void selectFromGallery(){
-        //Intent in = new Intent(Intent.ACTION_PICK);
         Intent in = new Intent(Intent.ACTION_GET_CONTENT);
         in.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
         startActivityForResult(Intent.createChooser(in, "Seleccione aplicación"), GALLERY_REQUEST_CODE);
@@ -276,7 +281,12 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
         if (takePictureIntent.resolveActivity(requireActivity().getPackageManager()) != null){
             File photoFile = null;
             try {
-                photoFile = createImageFile();
+                /** Obtain an empty image file instance */
+                photoFile = EditImage.createImageFile(requireContext());
+                if (currentPhotoPath != null)
+                    photoToDiscardPath.add(currentPhotoPath);
+                //Se obtiene la ruta de la nueva imagen
+                currentPhotoPath = photoFile.getAbsolutePath();
             }catch (IOException e){
                 Snackbar.make(binding.newDegreeLogo, "Error while creating image", Snackbar.LENGTH_LONG);
             }
@@ -288,19 +298,6 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
         }
     }
 
-    /** Empty image file instance */
-    private File createImageFile() throws IOException{
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        assert storageDir != null;
-        String imageFileName = storageDir.getAbsolutePath() + File.separator + "img_" + timeStamp + "_" + ".jpg";
-        File image = new File(imageFileName);
-        if (currentPhotoPath != null)
-            photoToDiscardPath.add(currentPhotoPath);
-        //Se obtiene la ruta de la nueva imagen
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
 
     /** Executed after select or capture image */
     @Override
@@ -308,12 +305,14 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
         switch (requestCode){
             case GALLERY_REQUEST_CODE:
                 if (resultCode== AppCompatActivity.RESULT_OK){
+                    if (currentPhotoPath != null){
+                        photoToDiscardPath.add(currentPhotoPath);
+                        currentPhotoPath = null;
+                    }
                     assert data != null;
                     //Picasso.get().load(data.getData()).fit().into(newDegreeLogo);
                     Picasso.get().load(data.getDataString()).fit().into(binding.newDegreeLogo);
-
-                    String imgPath = Objects.requireNonNull(data.getData()).getPath();
-                    Uri imgUri = data.getData();
+                    currentGalleryPath = Objects.requireNonNull(data.getDataString());
                 }else{
                     Snackbar.make(binding.newDegreeLogo, "FALLO AL OBTENER IMAGEN", Snackbar.LENGTH_SHORT);
                 }
@@ -343,7 +342,8 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString("IMAGE_PATH", currentPhotoPath);
+        outState.putString("GALLERY_PATH", currentGalleryPath);
+        outState.putString("PHOTO_PATH", currentPhotoPath);
         super.onSaveInstanceState(outState);
     }
 
