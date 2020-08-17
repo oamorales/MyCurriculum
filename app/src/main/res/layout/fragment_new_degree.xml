@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/newDegreeLogo"
             android:layout_width="130dp"
             android:layout_height="130dp"
@@ -19,7 +19,8 @@
             android:background="@color/colorImagesBckgnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/newDegreeTitleLayout"
