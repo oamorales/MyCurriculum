@@ -8,31 +8,19 @@ import io.realm.annotations.PrimaryKey;
 public class Degree extends RealmObject {
     @PrimaryKey
     private int id;
-    private int imageLogo;
-    private String imgPath;
+    private String imageLogo;
     private String degreeTittle;
     private String university;
     private String discipline;
     private int yearBegin;
     private int yearEnd;
-    private double gradeAverage;
+    private float gradeAverage;
 
     public Degree() {  }
 
-    public Degree(int imageLogo, String degreeTittle, String university, String discipline, int yearBegin, int yearEnd, double gradeAverage) {
+    public Degree(String imageLogo, String degreeTittle, String university, String discipline, int yearBegin, int yearEnd, float gradeAverage) {
         this.id = MyApplication.degreeId.incrementAndGet();
         this.imageLogo = imageLogo;
-        this.degreeTittle = degreeTittle;
-        this.university = university;
-        this.discipline = discipline;
-        this.yearBegin = yearBegin;
-        this.yearEnd = yearEnd;
-        this.gradeAverage = gradeAverage;
-    }
-
-    public Degree(String imgPath, String degreeTittle, String university, String discipline, int yearBegin, int yearEnd, double gradeAverage) {
-        this.id = MyApplication.degreeId.incrementAndGet();
-        this.imgPath = imgPath;
         this.degreeTittle = degreeTittle;
         this.university = university;
         this.discipline = discipline;
@@ -45,17 +33,9 @@ public class Degree extends RealmObject {
         return id;
     }
 
-    public int getImageLogo() {
-        return imageLogo;
-    }
+    public String getImageLogo() { return imageLogo; }
 
-    public void setImageLogo(int imageLogo) {
-        this.imageLogo = imageLogo;
-    }
-
-    public String getImgPath() { return imgPath; }
-
-    public void setImgPath(String imgPath) { this.imgPath = imgPath; }
+    public void setImageLogo(String imageLogo) { this.imageLogo = imageLogo; }
 
     public String getDegreeTittle() {
         return degreeTittle;
@@ -97,11 +77,12 @@ public class Degree extends RealmObject {
         this.yearEnd = yearEnd;
     }
 
-    public double getGradeAverage() {
+    public float getGradeAverage() {
         return gradeAverage;
     }
 
     public void setGradeAverage(float gradeAverage) {
         this.gradeAverage = gradeAverage;
     }
+
 }

@@ -64,8 +64,27 @@
         android:label="fragment_degree_details"
         tools:layout="@layout/fragment_degree_details" >
         <argument
+            android:name="degree_logo"
+            app:argType="string" />
+        <argument
             android:name="degree_tittle"
             app:argType="string"/>
+        <argument
+            android:name="degree_university"
+            app:argType="string" />
+        <argument
+            android:name="degree_discipline"
+            app:argType="string" />
+        <argument
+            android:name="degree_yearBegin"
+            app:argType="integer" />
+        <argument
+            android:name="degree_yearEnd"
+            app:argType="integer" />
+        <argument
+            android:name="degree_gradeAverage"
+            app:argType="float" />
+
     </fragment>
     <fragment
         android:id="@+id/languagesFragment"

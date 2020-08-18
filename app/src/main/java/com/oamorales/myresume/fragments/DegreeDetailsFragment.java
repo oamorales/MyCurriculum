@@ -1,5 +1,6 @@
 package com.oamorales.myresume.fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,9 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.oamorales.myresume.R;
+import com.oamorales.myresume.databinding.FragmentDegreeDetailsBinding;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 public class DegreeDetailsFragment extends Fragment {
 
+    private FragmentDegreeDetailsBinding binding;
     private DegreeDetailsFragmentArgs args;
     private AppCompatTextView degreeTittle;
 
@@ -32,14 +38,19 @@ public class DegreeDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_degree_details, container, false);
-        degreeTittle = view.findViewById(R.id.degreeTitle);
-        return view;
+        binding = FragmentDegreeDetailsBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        String tittle = args.getDegreeTittle();
-        degreeTittle.setText(tittle);
+        binding.degreeTitle.setText(args.getDegreeTittle());
+        Uri uri = Uri.fromFile(new File(args.getDegreeLogo()));
+        Picasso.get().load(uri).fit().into(binding.degreeDetailLogo);
+        binding.degreeDetailUnivName.setText(args.getDegreeUniversity());
+        binding.degreeDiscipline.setText(args.getDegreeDiscipline());
+        binding.degreeBeginYear.setText((String.valueOf(args.getDegreeYearBegin())));
+        binding.degreeEndYear.setText(String.valueOf(args.getDegreeYearEnd()));
+        binding.degreeGradeAverage.setText(String.valueOf(args.getDegreeGradeAverage()));
     }
 }

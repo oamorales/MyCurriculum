@@ -40,7 +40,7 @@ public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecycle
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(list.get(position).getDegreeTittle(),list.get(position).getImgPath());
+        holder.bind(list.get(position));
     }
 
     @Override
@@ -60,18 +60,20 @@ public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecycle
             this.imageViewDegree = itemView.findViewById(R.id.degreesListViewImage);
         }
 
-        public void bind(String text, String logoResource){
-            this.textViewDegree.setText(text);
-            if (logoResource!= null){
-                Uri uri = Uri.fromFile(new File(logoResource));
+        public void bind(Degree currentDegree){
+            this.textViewDegree.setText(currentDegree.getDegreeTittle());
+            if (currentDegree.getImageLogo()!= null){
+                Uri uri = Uri.fromFile(new File(currentDegree.getImageLogo()));
                 Picasso.get().load(uri).fit().into(this.imageViewDegree);
             }
-
             /** Se crea la acción para cambiar de fragment y se pasan los parámetros */
+            assert currentDegree.getImageLogo() != null;
             DegreesFragmentDirections.ActionDegreesFragmentToDegreeDetailsFragment directions = DegreesFragmentDirections
-                    .actionDegreesFragmentToDegreeDetailsFragment(textViewDegree.getText().toString());
+                    .actionDegreesFragmentToDegreeDetailsFragment(currentDegree.getImageLogo(), currentDegree.getDegreeTittle(),
+                            currentDegree.getUniversity(), currentDegree.getDiscipline(), currentDegree.getYearBegin(),
+                            currentDegree.getYearEnd(), currentDegree.getGradeAverage());
             itemView.setOnClickListener(Navigation.createNavigateOnClickListener(directions));
         }
-    }
 
+    }
 }

@@ -62,11 +62,11 @@ public class DegreesAdapter extends BaseAdapter {
         holder.textViewDegree.setText(current.getDegreeTittle());
 
         /** Se crea la acción para cambiar de fragment y se pasan los parámetros */
-        DegreesFragmentDirections.ActionDegreesFragmentToDegreeDetailsFragment directions = DegreesFragmentDirections
-                .actionDegreesFragmentToDegreeDetailsFragment("TSU EN ELECTRONICA Y MAS ALLA");
+        //DegreesFragmentDirections.ActionDegreesFragmentToDegreeDetailsFragment directions = DegreesFragmentDirections
+         //       .actionDegreesFragmentToDegreeDetailsFragment("TSU EN ELECTRONICA Y MAS ALLA");
 
         /** Se asigna evento onClick a cada elemento de la lista */
-        convertView.setOnClickListener(Navigation.createNavigateOnClickListener(directions));
+        //convertView.setOnClickListener(Navigation.createNavigateOnClickListener(directions));
 
         return convertView;
     }

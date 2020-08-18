@@ -142,7 +142,7 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
                     path = EditImage.storeFile(requireContext(), imageUri, requireActivity().getContentResolver());
                 else if (currentPhotoPath != null)
                     path = currentPhotoPath;
-                Degree newDegree = new Degree(path,tittle, university, discipline, yearB, yearE, Double.parseDouble(gradeAverage));
+                Degree newDegree = new Degree(path,tittle, university, discipline, yearB, yearE, Float.parseFloat(gradeAverage));
                 //Se guarda el nuevo degree
                 DBManager.insert(newDegree, requireContext());
                 //Evitar que la imagen de camara sea eliminada
