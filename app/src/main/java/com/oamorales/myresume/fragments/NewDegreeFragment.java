@@ -36,6 +36,8 @@ import com.oamorales.myresume.utils.DBManager;
 import com.oamorales.myresume.utils.EditImage;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,7 +74,7 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentNewDegreeBinding.inflate(inflater, container,false);
         View view = binding.getRoot();

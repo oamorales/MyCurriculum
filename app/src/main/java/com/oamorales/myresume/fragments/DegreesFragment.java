@@ -19,6 +19,8 @@ import com.oamorales.myresume.adapters.DegreesRecyclerAdapter;
 import com.oamorales.myresume.databinding.FragmentDegreesBinding;
 import com.oamorales.myresume.models.Degree;
 
+import org.jetbrains.annotations.NotNull;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -39,7 +41,7 @@ public class DegreesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentDegreesBinding.inflate(inflater, container, false);
         View view = binding.getRoot();

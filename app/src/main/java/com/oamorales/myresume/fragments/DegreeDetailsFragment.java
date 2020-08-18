@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +17,14 @@ import com.oamorales.myresume.R;
 import com.oamorales.myresume.databinding.FragmentDegreeDetailsBinding;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 
 public class DegreeDetailsFragment extends Fragment {
 
     private FragmentDegreeDetailsBinding binding;
     private DegreeDetailsFragmentArgs args;
-    private AppCompatTextView degreeTittle;
 
     public DegreeDetailsFragment() {
         // Required empty public constructor
@@ -36,7 +38,7 @@ public class DegreeDetailsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentDegreeDetailsBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -44,6 +46,7 @@ public class DegreeDetailsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         binding.degreeTitle.setText(args.getDegreeTittle());
         Uri uri = Uri.fromFile(new File(args.getDegreeLogo()));
         Picasso.get().load(uri).fit().into(binding.degreeDetailLogo);
@@ -52,5 +55,7 @@ public class DegreeDetailsFragment extends Fragment {
         binding.degreeBeginYear.setText((String.valueOf(args.getDegreeYearBegin())));
         binding.degreeEndYear.setText(String.valueOf(args.getDegreeYearEnd()));
         binding.degreeGradeAverage.setText(String.valueOf(args.getDegreeGradeAverage()));
+
+
     }
 }
