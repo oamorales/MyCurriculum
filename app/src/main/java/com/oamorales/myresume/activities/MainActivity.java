@@ -5,8 +5,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import androidx.lifecycle.ViewModel;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -14,6 +16,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -60,6 +64,13 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 if (destination.getId() != R.id.generalDataFragment){
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    toolbar.setNavigationIcon(R.drawable.ic_lateral_menu);
+                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            drawerLayout.openDrawer(GravityCompat.START);
+                        }
+                    });
                 }else {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 }
@@ -85,42 +96,4 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
     }
 
 
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
-
-
-    /*@Override
-        public void onBackPressed() {
-            //super.onBackPressed();
-        drawerLayout.closeDrawers();
-        *//*if (getSupportFragmentManager().findFragmentById(R.id.personInfoFragment).getView() == null){
-            Toast.makeText(this, "VA A SALIR", Toast.LENGTH_SHORT).show();
-        }*//*
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this)
-                    .setTitle("Confirmar Salida")
-                    .setMessage("¿Desea salir de la aplicación?")
-                    .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //finishAndRemoveTask();
-                            finish();
-                        }
-                    })
-                    .setNegativeButton("No",null);
-            dialog.show();
-        }*/
-
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-        navView.getMenu().getItem(0).setChecked(true);
-    }*/
 }

@@ -68,10 +68,12 @@ public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecycle
             }
             /** Se crea la acción para cambiar de fragment y se pasan los parámetros */
             assert currentDegree.getImageLogo() != null;
-            DegreesFragmentDirections.ActionDegreesFragmentToDegreeDetailsFragment directions = DegreesFragmentDirections
-                    .actionDegreesFragmentToDegreeDetailsFragment(currentDegree.getImageLogo(), currentDegree.getDegreeTittle(),
+            /*DegreesFragmentDirections.ActionDegreesFragmentToDegreeDetailsFragment directions = DegreesFragmentDirections
+                    .actionDegreesFragmentToDegreeDetailsFragment(currentDegree.getId(), currentDegree.getImageLogo(), currentDegree.getDegreeTittle(),
                             currentDegree.getUniversity(), currentDegree.getDiscipline(), currentDegree.getYearBegin(),
-                            currentDegree.getYearEnd(), currentDegree.getGradeAverage());
+                            currentDegree.getYearEnd(), currentDegree.getGradeAverage());*/
+            DegreesFragmentDirections.ActionDegreesFragmentToDegreeDetailsFragment directions = DegreesFragmentDirections
+                    .actionDegreesFragmentToDegreeDetailsFragment(currentDegree.getId());
             itemView.setOnClickListener(Navigation.createNavigateOnClickListener(directions));
         }
 

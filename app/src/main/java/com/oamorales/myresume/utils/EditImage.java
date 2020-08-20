@@ -15,9 +15,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class EditImage extends AppCompatActivity {
-
 
     /** Empty image file instance */
     public static File createImageFile(Context context) throws IOException {
@@ -38,8 +38,8 @@ public class EditImage extends AppCompatActivity {
             /** le pasas al bitmap la uri de la imagen seleccionada */
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedImgUri);
             // pones las medidas que quieras del nuevo .png
-            int bitmapWidth = 120; // para utilizar width de la imagen original: bitmap.getWidth();
-            int bitmapHeight = 120; // para utilizar height de la imagen original: bitmap.getHeight();
+            int bitmapWidth = bitmap.getWidth()/2; // para utilizar width de la imagen original: bitmap.getWidth();
+            int bitmapHeight = bitmap.getHeight()/2; // para utilizar height de la imagen original: bitmap.getHeight();
             Bitmap bitmapout = Bitmap.createScaledBitmap(bitmap, bitmapWidth, bitmapHeight, false);
             //creas el nuevo png en la nueva ruta
             bitmapout.compress(Bitmap.CompressFormat.PNG, 100, new FileOutputStream(imageFileName));
@@ -51,4 +51,11 @@ public class EditImage extends AppCompatActivity {
         }
     }
 
+    public static void discardImage(List<String> images){
+        File file;
+        for (String path: images) {
+            file = new File(path);
+            file.delete();
+        }
+    }
 }
