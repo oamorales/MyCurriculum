@@ -61,16 +61,26 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
-            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+            public void onDestinationChanged(@NonNull final NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 if (destination.getId() != R.id.generalDataFragment){
-                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                    toolbar.setNavigationIcon(R.drawable.ic_lateral_menu);
-                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            drawerLayout.openDrawer(GravityCompat.START);
-                        }
-                    });
+                    if (destination.getId() != R.id.newDegreeFragment && destination.getId() != R.id.editDegreeFragment){
+                        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                        toolbar.setNavigationIcon(R.drawable.ic_lateral_menu_dark);
+                        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                drawerLayout.openDrawer(GravityCompat.START);
+                            }
+                        });
+                    }else {
+                        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                controller.navigateUp();
+                            }
+                        });
+                    }
                 }else {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 }
@@ -90,10 +100,14 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
     /** Habilitar función del botón de Navegación. Open Drawer */
     @Override
     public boolean onSupportNavigateUp() {
-        //return super.onSupportNavigateUp();
-
         return NavigationUI.navigateUp(navController,drawerLayout);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isOpen())
+            drawerLayout.closeDrawers();
+        else
+            super.onBackPressed();
+    }
 }

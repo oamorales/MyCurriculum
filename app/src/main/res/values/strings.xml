@@ -18,5 +18,8 @@
     <string name="language_level_3">Básico profesional</string>
     <string name="language_level_4">Profesional completo</string>
     <string name="language_level_5">Bilingüe o nativo</string>
-
+    <string name="text_discipline">Disciplina</string>
+    <string name="text_year_begin">Año Inicio</string>
+    <string name="text_year_end">Año Fin</string>
+    <string name="text_average">Promedio</string>
 </resources>
