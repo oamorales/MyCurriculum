@@ -54,9 +54,9 @@ public class DegreesFragment extends Fragment {
         /** Se crea la lista de degrees y se agregan los elementos obtenidos de la base de datos */
         RealmResults<Degree> degrees = realm.where(Degree.class).findAll().sort("yearEnd", Sort.DESCENDING);
         /** Se añade el layout manager */
-        binding.degreesListView.setLayoutManager(layoutManager);
+        binding.degreesRecyclerView.setLayoutManager(layoutManager);
         /** Se crea el adaptador y se le añade al listView */
-        binding.degreesListView.setAdapter(new DegreesRecyclerAdapter(requireActivity(),R.layout.degrees_list_view, degrees));
+        binding.degreesRecyclerView.setAdapter(new DegreesRecyclerAdapter(requireActivity(),R.layout.degrees_card_view, degrees));
         /** Se captura la acción y se añade al evento onClick del FAB */
         NavDirections navDirections = DegreesFragmentDirections.actionDegreesFragmentToNewDegreeFragment();
         binding.fabNewDegree.setOnClickListener(Navigation.createNavigateOnClickListener(navDirections));

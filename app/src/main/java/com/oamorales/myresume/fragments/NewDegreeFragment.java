@@ -367,7 +367,7 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onDestroy() {
-        EditImage.discardImage(photoToDiscardPath);
+        EditImage.discardImages(photoToDiscardPath);
         super.onDestroy();
     }
 

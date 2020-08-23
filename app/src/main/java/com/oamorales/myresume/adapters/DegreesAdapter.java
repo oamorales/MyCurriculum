@@ -8,10 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.navigation.Navigation;
-
 import com.oamorales.myresume.R;
-import com.oamorales.myresume.fragments.DegreesFragmentDirections;
 import com.oamorales.myresume.models.Degree;
 import com.squareup.picasso.Picasso;
 
@@ -51,8 +48,8 @@ public class DegreesAdapter extends BaseAdapter {
         if (convertView==null) {
                 convertView = LayoutInflater.from(context).inflate(this.layout, null);
             holder = new ViewHolder();
-            holder.imageViewDegree = convertView.findViewById(R.id.degreesListViewImage);
-            holder.textViewDegree = convertView.findViewById(R.id.degreesListViewText);
+            holder.imageViewDegree = convertView.findViewById(R.id.degreesCardViewImage);
+            holder.textViewDegree = convertView.findViewById(R.id.degreesCardViewText);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();

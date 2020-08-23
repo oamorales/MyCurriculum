@@ -51,7 +51,7 @@ public class EditImage extends AppCompatActivity {
         }
     }
 
-    public static void discardImage(List<String> images){
+    public static void discardImages(List<String> images){
         File file;
         for (String path: images) {
             file = new File(path);

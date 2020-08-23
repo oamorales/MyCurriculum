@@ -101,12 +101,11 @@ public class EditDegreeFragment extends Fragment implements View.OnClickListener
             Picasso.get().load(imageUri).fit().into(binding.editDegreeLogo);
         }else if (currentGalleryPath!=null){
             imageUri = model.getImgPath().getValue();
-            //Picasso.get().load(currentGalleryPath).fit().into(binding.editDegreeLogo);
             Picasso.get().load(imageUri).fit().into(binding.editDegreeLogo);
         }else{
             /** Se obtiene ruta de la imagen recibida */
-            currentGalleryPath = degree.getImageLogo();
-            imageUri = Uri.fromFile(new File(currentGalleryPath));
+            currentPhotoPath = degree.getImageLogo();
+            imageUri = Uri.fromFile(new File(currentPhotoPath));
             model.setImgPath(imageUri);
             Picasso.get().load(imageUri).fit().into(binding.editDegreeLogo);
         }
@@ -384,7 +383,7 @@ public class EditDegreeFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onDestroy() {
-        EditImage.discardImage(photoToDiscardPath);
+        EditImage.discardImages(photoToDiscardPath);
         super.onDestroy();
     }
 

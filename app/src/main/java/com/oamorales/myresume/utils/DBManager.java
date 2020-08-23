@@ -6,8 +6,13 @@ import android.widget.Toast;
 import com.oamorales.myresume.models.Degree;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 public abstract class DBManager {
+
+    public static final int SORT_ASCENDING = 0;
+    public static final int SORT_DESCENDING = 1;
 
     public static void insert(Degree degree, Context context){
         Realm realm = Realm.getDefaultInstance();
@@ -69,6 +74,19 @@ public abstract class DBManager {
         Degree degree = realm.where(Degree.class).equalTo("id", id).findFirst();
         realm.close();
         return  degree;
+    }
+
+    public static RealmResults<Degree> getAllDegrees(String sortBy, int sortType){
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Degree> degrees;
+        if (sortType == SORT_DESCENDING){
+            degrees = realm.where(Degree.class).findAll().sort(sortBy, Sort.DESCENDING);
+            realm.close();
+            return degrees;
+        }
+        degrees = realm.where(Degree.class).findAll().sort(sortBy, Sort.ASCENDING);
+        realm.close();
+        return degrees;
     }
 
 }

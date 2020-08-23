@@ -22,4 +22,8 @@
     <string name="text_year_begin">Año Inicio</string>
     <string name="text_year_end">Año Fin</string>
     <string name="text_average">Promedio</string>
+    <string name="delete">Eliminar</string>
+    <string name="delete_message">¿Desea eliminar?</string>
+    <string name="yes">SI</string>
+    <string name="no">NO</string>
 </resources>
