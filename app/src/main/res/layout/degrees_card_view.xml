@@ -16,14 +16,14 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/degreesListViewImage"
+            android:id="@+id/degreesCardViewImage"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_marginTop="5dp"
             android:scaleType="centerCrop"/>
 
         <TextView
-            android:id="@+id/degreesListViewText"
+            android:id="@+id/degreesCardViewText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"/>

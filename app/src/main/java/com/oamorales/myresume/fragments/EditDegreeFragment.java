@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -32,38 +31,35 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.oamorales.myresume.R;
 import com.oamorales.myresume.activities.MyViewModel;
-import com.oamorales.myresume.databinding.FragmentNewDegreeBinding;
+import com.oamorales.myresume.databinding.FragmentEditDegreeBinding;
 import com.oamorales.myresume.models.Degree;
 import com.oamorales.myresume.utils.DBManager;
 import com.oamorales.myresume.utils.EditImage;
 import com.squareup.picasso.Picasso;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class NewDegreeFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener{
+public class EditDegreeFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
 
     private MyViewModel model;
-    private FragmentNewDegreeBinding binding;
-    private int yearB, yearE;
+    private FragmentEditDegreeBinding binding;
+    private EditDegreeFragmentArgs args;
+    private List<Integer> years = new ArrayList<>();
+    private List<String> photoToDiscardPath = new ArrayList<>();
+    /** Request codes */
     private final int GALLERY_REQUEST_CODE = 1000;
     private final int CAMERA_REQUEST_CODE = 1001;
-
-    private List<Integer> years = new ArrayList<>();
     private final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1000;
-
-    /** Variable para la ruta de la imagen a guardar */
+    /** Variables para la ruta de la imagen a guardar */
     private String currentPhotoPath, currentGalleryPath;
-    private List<String> photoToDiscardPath = new ArrayList<>();
+    private int yearB, yearE, id;
     private Uri imageUri;
 
-    public NewDegreeFragment() {
+    public EditDegreeFragment() {
         // Required empty public constructor
     }
 
@@ -75,12 +71,14 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
             currentPhotoPath = savedInstanceState.getString("PHOTO_PATH");
             currentGalleryPath = savedInstanceState.getString("GALLERY_PATH");
         }
+        args = EditDegreeFragmentArgs.fromBundle(requireArguments());
+        id = args.getDegreeId();
     }
 
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentNewDegreeBinding.inflate(inflater, container,false);
+        binding = FragmentEditDegreeBinding.inflate(inflater, container,false);
         View view = binding.getRoot();
         int year = 2020;
         for (int i = 0; i<15; i++){
@@ -88,8 +86,8 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
             year--;
         }
         ArrayAdapter<Integer> adapter = new ArrayAdapter<>(requireContext(), R.layout.degrees_list_years, years);
-        binding.newDegreeYearBegin.setAdapter(adapter);
-        binding.newDegreeYearEnd.setAdapter(adapter);
+        binding.editDegreeYearBegin.setAdapter(adapter);
+        binding.editDegreeYearEnd.setAdapter(adapter);
         return view;
     }
 
@@ -97,40 +95,60 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         model = new ViewModelProvider(requireActivity()).get(MyViewModel.class);
+        Degree degree = DBManager.getDegreeById(id);
         if (currentPhotoPath!=null){
             imageUri = model.getImgPath().getValue();
-            Picasso.get().load(imageUri).fit().into(binding.newDegreeLogo);
+            Picasso.get().load(imageUri).fit().into(binding.editDegreeLogo);
         }else if (currentGalleryPath!=null){
             imageUri = model.getImgPath().getValue();
-            Picasso.get().load(currentGalleryPath).fit().into(binding.newDegreeLogo);
+            Picasso.get().load(imageUri).fit().into(binding.editDegreeLogo);
+        }else{
+            /** Se obtiene ruta de la imagen recibida */
+            currentPhotoPath = degree.getImageLogo();
+            imageUri = Uri.fromFile(new File(currentPhotoPath));
+            model.setImgPath(imageUri);
+            Picasso.get().load(imageUri).fit().into(binding.editDegreeLogo);
         }
+        setContentUI(degree);
         setListeners();
+    }
+
+    /** Set UI content */
+    private void setContentUI(Degree degree){
+        binding.editDegreeTitle.setText(degree.getDegreeTittle());
+        binding.editDegreeUniversity.setText(degree.getUniversity());
+        binding.editDegreeDiscipline.setText(degree.getDiscipline());
+        yearB = degree.getYearBegin();
+        binding.editDegreeYearBegin.setText(String.valueOf(yearB));
+        yearE = degree.getYearEnd();
+        binding.editDegreeYearEnd.setText(String.valueOf(yearE));
+        binding.editDegreeGradeAverage.setText(String.valueOf(degree.getGradeAverage()));
     }
 
     /** Listeners events configs */
     private void setListeners(){
-        binding.saveBtn.setOnClickListener(this);
-        binding.newDegreeDiscipline.setOnEditorActionListener(this);
-        binding.newDegreeTitle.setOnEditorActionListener(this);
-        binding.newDegreeUniversity.setOnEditorActionListener(this);
-        binding.newDegreeGradeAverage.setOnEditorActionListener(this);
-        binding.newDegreeYearBegin.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.editDegreeSaveBtn.setOnClickListener(this);
+        binding.editDegreeDiscipline.setOnEditorActionListener(this);
+        binding.editDegreeTitle.setOnEditorActionListener(this);
+        binding.editDegreeUniversity.setOnEditorActionListener(this);
+        binding.editDegreeGradeAverage.setOnEditorActionListener(this);
+        binding.editDegreeYearBegin.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                binding.newDegreeYearBegin.setError(null);
-                binding.newDegreeYearBegin.setText(String.valueOf(years.get(position)));
+                binding.editDegreeYearBegin.setError(null);
+                binding.editDegreeYearBegin.setText(String.valueOf(years.get(position)));
                 //yearB = years.get(position);
             }
         });
-        binding.newDegreeYearEnd.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.editDegreeYearEnd.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                binding.newDegreeYearEnd.setError(null);
-                binding.newDegreeYearEnd.setText(String.valueOf(years.get(position)));
+                binding.editDegreeYearEnd.setError(null);
+                binding.editDegreeYearBegin.setText(String.valueOf(years.get(position)));
                 //yearE = years.get(position);
             }
         });
-        binding.newDegreeLogo.setOnClickListener(new View.OnClickListener() {
+        binding.editDegreeLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openMediaStore();
@@ -141,32 +159,28 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
     /** Evento botón guardar */
     @Override
     public void onClick(View v) {
-            String tittle = Objects.requireNonNull(binding.newDegreeTitle.getText()).toString();
-            String university = Objects.requireNonNull(binding.newDegreeUniversity.getText()).toString();
-            String discipline = Objects.requireNonNull(binding.newDegreeDiscipline.getText()).toString();
-            String gradeAverage = Objects.requireNonNull(binding.newDegreeGradeAverage.getText()).toString();
+            String tittle = Objects.requireNonNull(binding.editDegreeTitle.getText()).toString();
+            String university = Objects.requireNonNull(binding.editDegreeUniversity.getText()).toString();
+            String discipline = Objects.requireNonNull(binding.editDegreeDiscipline.getText()).toString();
+            String gradeAverage = Objects.requireNonNull(binding.editDegreeGradeAverage.getText()).toString();
         if (fieldsAreValid(tittle, university, discipline, gradeAverage)){
             //Se guardan los datos si no hay campos vacíos
             String path = "";
-            if (currentGalleryPath != null){
-                //imageUri = model.getImgPath().getValue();
+            if (currentGalleryPath != null)
                 path = EditImage.storeFile(requireContext(), imageUri, requireActivity().getContentResolver());
-            }
-            else if (currentPhotoPath != null){
+            else if (currentPhotoPath != null)
                 path = currentPhotoPath;
-            }
             Degree newDegree = new Degree(path,tittle, university, discipline, yearB, yearE, Float.parseFloat(gradeAverage));
             //Se guarda el nuevo degree
-            DBManager.insert(newDegree, requireContext());
+            DBManager.update(newDegree, args.getDegreeId(), requireContext());
             Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
             requireActivity().onBackPressed();
         }
     }
 
-    /** Validate fields */
     private boolean fieldsAreValid(String value1, String value2, String value3, String value4){
-        String yearBegin = binding.newDegreeYearBegin.getText().toString();
-        String yearEnd = binding.newDegreeYearEnd.getText().toString();
+        String yearBegin = binding.editDegreeYearBegin.getText().toString();
+        String yearEnd = binding.editDegreeYearEnd.getText().toString();
         /** Se valida que no hay campos vacíos */
         if (!value1.isEmpty() && !value2.isEmpty() && !value3.isEmpty()
                 && !value4.isEmpty() && isNumeric(yearBegin) && isNumeric(yearEnd) &&
@@ -174,20 +188,20 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
             yearB = Integer.parseInt(yearBegin);
             yearE = Integer.parseInt(yearEnd);
             if (yearE >= yearB && yearB >= years.get(0)-years.size() && yearB <= years.get(0)
-            && yearE >= years.get(0)-years.size() && yearE <= years.get(0)){
+                    && yearE >= years.get(0)-years.size() && yearE <= years.get(0)){
                 return true;
             }else{
-                binding.newDegreeYearBegin.setError("invalid");
-                binding.newDegreeYearEnd.setError("invalid");
+                binding.editDegreeYearBegin.setError("invalid");
+                binding.editDegreeYearEnd.setError("invalid");
                 return false;
             }
         }else{
-            binding.newDegreeTitle.setError(value1.isEmpty() ? "required" : null);
-            binding.newDegreeUniversity.setError(value2.isEmpty() ? "required" : null);
-            binding.newDegreeDiscipline.setError(value3.isEmpty() ? "required" : null);
-            binding.newDegreeGradeAverage.setError(value4.isEmpty() ? "required" : null);
-            binding.newDegreeYearBegin.setError((isNumeric(yearBegin)) ? null : "required");
-            binding.newDegreeYearEnd.setError((isNumeric(yearEnd)) ? null : "required");
+            binding.editDegreeTitle.setError(value1.isEmpty() ? "required" : null);
+            binding.editDegreeUniversity.setError(value2.isEmpty() ? "required" : null);
+            binding.editDegreeDiscipline.setError(value3.isEmpty() ? "required" : null);
+            binding.editDegreeGradeAverage.setError(value4.isEmpty() ? "required" : null);
+            binding.editDegreeYearBegin.setError((isNumeric(yearBegin)) ? null : "required");
+            binding.editDegreeYearEnd.setError((isNumeric(yearEnd)) ? null : "required");
             return false;
         }
     }
@@ -211,7 +225,7 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
     /** newDegreeLogo Click event */
     private void openMediaStore(){
         if (!isExternalStorageWritable()){
-            Snackbar.make(binding.newDegreeLogo, "Memory Access Denied", Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show();
+            Snackbar.make(binding.editDegreeLogo, "Memory Access Denied", Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show();
         }else{
             if (haveStoragePermission()){
                 selectAction();
@@ -248,19 +262,19 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
                 }else {
                     boolean showRationale = shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE);
                     if (showRationale){
-                        Snackbar.make(binding.newDegreeLogo,"Debe habilitar permiso al almacenamiento para poder cargar el logo", Snackbar.LENGTH_LONG)
+                        Snackbar.make(binding.editDegreeLogo,"Debe habilitar permiso al almacenamiento para poder cargar el logo", Snackbar.LENGTH_LONG)
                                 .show();
                     }else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                         builder.setTitle("HABILITAR PERMISO")
                                 .setMessage("Para poder cargar el logo es necesario que habilite el permiso de acceso al almacenamiento.\n" +
-                                "¿Desea habilitar el permiso mencionado?").setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                                        "¿Desea habilitar el permiso mencionado?").setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 goToSettings();
                             }
                         }).setNegativeButton("No",null)
-                        .show();
+                                .show();
                     }
                 }
         }
@@ -314,7 +328,7 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
                 /** Se obtiene la ruta de la nueva imagen */
                 currentPhotoPath = photoFile.getAbsolutePath();
             }catch (IOException e){
-                Snackbar.make(binding.newDegreeLogo, "Error while creating image", Snackbar.LENGTH_LONG);
+                Snackbar.make(binding.editDegreeLogo, "Error while creating image", Snackbar.LENGTH_LONG);
             }
             if (photoFile != null){
                 imageUri = FileProvider.getUriForFile(requireContext(), "com.oamorales.myresume.provider", photoFile);
@@ -337,7 +351,7 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
                         currentPhotoPath = null;
                     }
                     assert data != null;
-                    Picasso.get().load(data.getDataString()).fit().into(binding.newDegreeLogo);
+                    Picasso.get().load(data.getDataString()).fit().into(binding.editDegreeLogo);
                     currentGalleryPath = Objects.requireNonNull(data.getDataString());
                     imageUri = data.getData();
                     model.setImgPath(imageUri);
@@ -347,9 +361,11 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
                 return;
             case CAMERA_REQUEST_CODE:
                 if (resultCode== AppCompatActivity.RESULT_OK){
+                    /** Imagen tomada/generada */
                     currentGalleryPath = null;
-                    Picasso.get().load(this.imageUri).fit().into(binding.newDegreeLogo);
+                    Picasso.get().load(this.imageUri).fit().into(binding.editDegreeLogo);
                 }else{
+                    /** Imagen no fue tomada/generada */
                     currentPhotoPath = null;
                     Toast.makeText(requireContext(), "Error al tomar foto", Toast.LENGTH_SHORT).show();
                 }
@@ -376,5 +392,4 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
         super.onDestroyView();
         binding = null;
     }
-
 }

@@ -64,8 +64,12 @@
         android:label="fragment_degree_details"
         tools:layout="@layout/fragment_degree_details" >
         <argument
-            android:name="degree_tittle"
-            app:argType="string"/>
+            android:name="degree_id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_degreeDetailsFragment_to_editDegreeFragment"
+            app:destination="@id/editDegreeFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/languagesFragment"
@@ -92,5 +96,14 @@
         android:name="com.oamorales.myresume.fragments.PersonInfoEditFragment"
         android:label="Person Info Edit"
         tools:layout="@layout/fragment_person_info_edit" />
+    <fragment
+        android:id="@+id/editDegreeFragment"
+        android:name="com.oamorales.myresume.fragments.EditDegreeFragment"
+        android:label="fragment_edit_degree"
+        tools:layout="@layout/fragment_edit_degree" >
+        <argument
+            android:name="degree_id"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>
