@@ -5,17 +5,13 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.oamorales.myresume.R;
 import com.oamorales.myresume.databinding.FragmentDegreeDetailsBinding;
 import com.oamorales.myresume.models.Degree;
 import com.oamorales.myresume.utils.DBManager;
@@ -30,11 +26,8 @@ public class DegreeDetailsFragment extends Fragment {
     private FragmentDegreeDetailsBinding binding;
     private DegreeDetailsFragmentArgs args;
     private int id;
-    //private Degree degree;
 
-    public DegreeDetailsFragment() {
-        // Required empty public constructor
-    }
+    public DegreeDetailsFragment() { /** Required */  }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,10 +46,6 @@ public class DegreeDetailsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //degree = DBManager.getDegreeById(args.getDegreeId());
-        /*DegreeDetailsFragmentDirections.ActionDegreeDetailsFragmentToEditDegreeFragment directions = DegreeDetailsFragmentDirections
-                .actionDegreeDetailsFragmentToEditDegreeFragment(degree.getId(), degree.getImageLogo(), degree.getDegreeTittle()
-                ,degree.getUniversity(), degree.getDiscipline(), degree.getYearBegin(), degree.getYearEnd(), degree.getGradeAverage());*/
         DegreeDetailsFragmentDirections.ActionDegreeDetailsFragmentToEditDegreeFragment directions = DegreeDetailsFragmentDirections
                 .actionDegreeDetailsFragmentToEditDegreeFragment(id);
         binding.fabEditDegree.setOnClickListener(Navigation.createNavigateOnClickListener(directions));
@@ -65,7 +54,7 @@ public class DegreeDetailsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Degree degree = DBManager.getDegreeById(id);
+        Degree degree = (Degree) DBManager.getObjectById(Degree.class, id);
         setContentUI(degree);
     }
 

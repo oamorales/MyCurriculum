@@ -37,6 +37,8 @@ import com.oamorales.myresume.utils.DBManager;
 import com.oamorales.myresume.utils.EditImage;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -76,7 +78,7 @@ public class EditDegreeFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentEditDegreeBinding.inflate(inflater, container,false);
         View view = binding.getRoot();
@@ -95,7 +97,7 @@ public class EditDegreeFragment extends Fragment implements View.OnClickListener
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         model = new ViewModelProvider(requireActivity()).get(MyViewModel.class);
-        Degree degree = DBManager.getDegreeById(id);
+        Degree degree = (Degree) DBManager.getObjectById(Degree.class, id);
         if (currentPhotoPath!=null){
             imageUri = model.getImgPath().getValue();
             Picasso.get().load(imageUri).fit().into(binding.editDegreeLogo);
@@ -163,7 +165,9 @@ public class EditDegreeFragment extends Fragment implements View.OnClickListener
             String university = Objects.requireNonNull(binding.editDegreeUniversity.getText()).toString();
             String discipline = Objects.requireNonNull(binding.editDegreeDiscipline.getText()).toString();
             String gradeAverage = Objects.requireNonNull(binding.editDegreeGradeAverage.getText()).toString();
-        if (fieldsAreValid(tittle, university, discipline, gradeAverage)){
+            String yearBegin = binding.editDegreeYearBegin.getText().toString();
+            String yearEnd = binding.editDegreeYearEnd.getText().toString();
+        if (fieldsAreValid(tittle, university, discipline, gradeAverage, yearBegin, yearEnd)){
             //Se guardan los datos si no hay campos vacíos
             String path = "";
             if (currentGalleryPath != null)
@@ -172,21 +176,19 @@ public class EditDegreeFragment extends Fragment implements View.OnClickListener
                 path = currentPhotoPath;
             Degree newDegree = new Degree(path,tittle, university, discipline, yearB, yearE, Float.parseFloat(gradeAverage));
             //Se guarda el nuevo degree
-            DBManager.update(newDegree, args.getDegreeId(), requireContext());
+            DBManager.updateDegree(newDegree, args.getDegreeId(), requireContext());
             Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
             requireActivity().onBackPressed();
         }
     }
 
-    private boolean fieldsAreValid(String value1, String value2, String value3, String value4){
-        String yearBegin = binding.editDegreeYearBegin.getText().toString();
-        String yearEnd = binding.editDegreeYearEnd.getText().toString();
+    private boolean fieldsAreValid(String value1, String value2, String value3, String value4, String value5, String value6){
         /** Se valida que no hay campos vacíos */
         if (!value1.isEmpty() && !value2.isEmpty() && !value3.isEmpty()
-                && !value4.isEmpty() && isNumeric(yearBegin) && isNumeric(yearEnd) &&
+                && !value4.isEmpty() && isNumeric(value5) && isNumeric(value6) &&
                 (currentPhotoPath != null || currentGalleryPath != null)){
-            yearB = Integer.parseInt(yearBegin);
-            yearE = Integer.parseInt(yearEnd);
+            yearB = Integer.parseInt(value5);
+            yearE = Integer.parseInt(value6);
             if (yearE >= yearB && yearB >= years.get(0)-years.size() && yearB <= years.get(0)
                     && yearE >= years.get(0)-years.size() && yearE <= years.get(0)){
                 return true;
@@ -200,8 +202,8 @@ public class EditDegreeFragment extends Fragment implements View.OnClickListener
             binding.editDegreeUniversity.setError(value2.isEmpty() ? "required" : null);
             binding.editDegreeDiscipline.setError(value3.isEmpty() ? "required" : null);
             binding.editDegreeGradeAverage.setError(value4.isEmpty() ? "required" : null);
-            binding.editDegreeYearBegin.setError((isNumeric(yearBegin)) ? null : "required");
-            binding.editDegreeYearEnd.setError((isNumeric(yearEnd)) ? null : "required");
+            binding.editDegreeYearBegin.setError((isNumeric(value5)) ? null : "required");
+            binding.editDegreeYearEnd.setError((isNumeric(value6)) ? null : "required");
             return false;
         }
     }

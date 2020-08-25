@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.oamorales.myresume.models.Degree;
 
 import io.realm.Realm;
+import io.realm.RealmObject;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -14,11 +15,11 @@ public abstract class DBManager {
     public static final int SORT_ASCENDING = 0;
     public static final int SORT_DESCENDING = 1;
 
-    public static void insert(Degree degree, Context context){
+    public static void insert(RealmObject realmObject, Context context){
         Realm realm = Realm.getDefaultInstance();
         try{
             realm.beginTransaction();
-            realm.copyToRealm(degree);
+            realm.copyToRealm(realmObject);
             realm.commitTransaction();
             realm.close();
         }catch (Error error){
@@ -27,7 +28,7 @@ public abstract class DBManager {
         }
     }
 
-    public static void update(Degree oldDegree, int id, Context context){
+    public static void updateDegree(Degree oldDegree, int id, Context context){
         Realm realm = Realm.getDefaultInstance();
         String logo = oldDegree.getImageLogo();
         String tittle = oldDegree.getDegreeTittle();
@@ -56,11 +57,11 @@ public abstract class DBManager {
         }
     }
 
-    public static void delete(Degree degree, Context context){
+    public static void delete(RealmObject realmObject, Context context){
         Realm realm = Realm.getDefaultInstance();
         try{
             realm.beginTransaction();
-            degree.deleteFromRealm();
+            realmObject.deleteFromRealm();
             realm.commitTransaction();
             realm.close();
         }catch (Error error){
@@ -69,11 +70,11 @@ public abstract class DBManager {
         }
     }
 
-    public static Degree getDegreeById(int id){
+    public static <T extends RealmObject> RealmObject getObjectById(Class<T> anyClass, int id){
         Realm realm = Realm.getDefaultInstance();
-        Degree degree = realm.where(Degree.class).equalTo("id", id).findFirst();
+        RealmObject object = realm.where(anyClass).equalTo("id", id).findFirst();
         realm.close();
-        return  degree;
+        return object;
     }
 
     public static RealmResults<Degree> getAllDegrees(String sortBy, int sortType){

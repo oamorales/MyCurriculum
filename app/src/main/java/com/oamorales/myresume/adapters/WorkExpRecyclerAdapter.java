@@ -1,38 +1,38 @@
 package com.oamorales.myresume.adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textview.MaterialTextView;
 import com.oamorales.myresume.R;
-import com.oamorales.myresume.fragments.DegreesFragmentDirections;
 import com.oamorales.myresume.models.Degree;
+import com.oamorales.myresume.models.WorkExp;
 import com.oamorales.myresume.utils.DBManager;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.List;
 
-public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecyclerAdapter.ViewHolder> {
+public class WorkExpRecyclerAdapter extends RecyclerView.Adapter <WorkExpRecyclerAdapter.ViewHolder> {
 
     private Activity activity;
     private int layout;
-    private List<Degree> list;
+    private List<WorkExp> list;
 
-    public DegreesRecyclerAdapter(Activity activity, int layout, List<Degree> list) {
+    public WorkExpRecyclerAdapter(Activity activity, int layout, List<WorkExp> list) {
         this.activity = activity;
         this.layout = layout;
         this.list = list;
@@ -51,40 +51,35 @@ public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecycle
 
     @Override
     public int getItemCount() {
-        return this.list.size();
+        return list.size();
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
 
-        private TextView textViewDegree;
-        private ImageView imageViewDegree;
+        private MaterialTextView companyName;
+        private MaterialTextView position;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.textViewDegree = itemView.findViewById(R.id.degreesCardViewText);
-            this.imageViewDegree = itemView.findViewById(R.id.degreesCardViewImage);
-            /** Assign context menu listener */
+            companyName = itemView.findViewById(R.id.workExpCardViewCompany);
+            position = itemView.findViewById(R.id.workExpCardViewPosition);
             itemView.setOnCreateContextMenuListener(this);
         }
 
-        public void bind(Degree currentDegree){
-            this.textViewDegree.setText(currentDegree.getDegreeTittle());
-            if (currentDegree.getImageLogo()!= null){
-                Uri uri = Uri.fromFile(new File(currentDegree.getImageLogo()));
-                Picasso.get().load(uri).fit().into(this.imageViewDegree);
-            }
+        private void bind(WorkExp workExp){
+            companyName.setText(workExp.getCompanyName());
+            position.setText(workExp.getPosition());
             /** Se crea la acción para cambiar de fragment y se pasan los parámetros */
-            assert currentDegree.getImageLogo() != null;
-            DegreesFragmentDirections.ActionDegreesFragmentToDegreeDetailsFragment directions = DegreesFragmentDirections
-                    .actionDegreesFragmentToDegreeDetailsFragment(currentDegree.getId());
-            itemView.setOnClickListener(Navigation.createNavigateOnClickListener(directions));
+            //DegreesFragmentDirections.ActionDegreesFragmentToDegreeDetailsFragment directions = DegreesFragmentDirections
+            //.actionDegreesFragmentToDegreeDetailsFragment(currentDegree.getId());
+            //itemView.setOnClickListener(Navigation.createNavigateOnClickListener(directions));
         }
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            Degree currentDegree = list.get(getAdapterPosition());
-            menu.setHeaderTitle(currentDegree.getDegreeTittle());
+            WorkExp currentWorkExp = list.get(getAdapterPosition());
+            menu.setHeaderTitle(currentWorkExp.getPosition());
             MenuInflater inflater = activity.getMenuInflater();
             inflater.inflate(R.menu.context_menu, menu);
             /** Assign onClick event to every menu item */
@@ -100,15 +95,15 @@ public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecycle
             return true;
         }
 
-        private void confirmDeletion(){
-            final Degree currentDegree = list.get(getAdapterPosition());
+        private void confirmDeletion() {
+            final WorkExp currentWorkExp = list.get(getAdapterPosition());
             MaterialAlertDialogBuilder materialBuilder = new MaterialAlertDialogBuilder(activity);
-            materialBuilder.setTitle(currentDegree.getDegreeTittle())
+            materialBuilder.setTitle(currentWorkExp.getPosition())
                     .setMessage(R.string.delete_message)
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            DBManager.delete(currentDegree, activity);
+                            DBManager.delete(currentWorkExp, activity);
                             notifyItemRemoved(getAdapterPosition());
                         }
                     })
