@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.oamorales.myresume.models.Degree;
+import com.oamorales.myresume.models.WorkExp;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
@@ -55,6 +56,30 @@ public abstract class DBManager {
             Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
             realm.close();
         }
+    }
+
+    public static void updateWorkExp(WorkExp oldWorkExp, int id, Context context){
+        Realm realm = Realm.getDefaultInstance();
+        String company = oldWorkExp.getCompanyName();
+        String position = oldWorkExp.getPosition();
+        String positionDesc = oldWorkExp.getPositionDesc();
+        int startY = oldWorkExp.getStartYear();
+        int endY = oldWorkExp.getEndYear();
+        WorkExp workExp = realm.where(WorkExp.class).equalTo("id", id).findFirst();
+        try {
+            realm.beginTransaction();
+            assert workExp != null;
+            workExp.setCompanyName(company);
+            workExp.setPosition(position);
+            workExp.setPositionDesc(positionDesc);
+            workExp.setStartYear(startY);
+            workExp.setEndYear(endY);
+            realm.copyToRealmOrUpdate(workExp);
+            realm.commitTransaction();
+        }catch (Error error){
+            Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+        }
+        realm.close();
     }
 
     public static void delete(RealmObject realmObject, Context context){

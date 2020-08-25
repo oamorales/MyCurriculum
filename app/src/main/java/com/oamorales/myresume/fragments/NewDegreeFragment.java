@@ -43,7 +43,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -87,7 +86,7 @@ public class NewDegreeFragment extends Fragment implements View.OnClickListener,
             years.add(year);
             year--;
         }
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(requireContext(), R.layout.degrees_list_years, years);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(requireContext(), R.layout.list_years, years);
         binding.newDegreeYearBegin.setAdapter(adapter);
         binding.newDegreeYearEnd.setAdapter(adapter);
         return view;

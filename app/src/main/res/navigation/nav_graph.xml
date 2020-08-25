@@ -80,7 +80,11 @@
         android:id="@+id/workExpFragment"
         android:name="com.oamorales.myresume.fragments.WorkExpFragment"
         android:label="@string/working_experience"
-        tools:layout="@layout/fragment_work_exp" />
+        tools:layout="@layout/fragment_work_exp" >
+        <action
+            android:id="@+id/action_workExpFragment_to_newWorkExpFragment"
+            app:destination="@id/newWorkExpFragment" />
+    </fragment>
     <fragment
         android:id="@+id/skillsFragment"
         android:name="com.oamorales.myresume.fragments.SkillsFragment"
@@ -105,5 +109,10 @@
             android:name="degree_id"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/newWorkExpFragment"
+        android:name="com.oamorales.myresume.fragments.NewWorkExpFragment"
+        android:label="fragment_new_work_exp"
+        tools:layout="@layout/fragment_new_work_exp" />
 
 </navigation>

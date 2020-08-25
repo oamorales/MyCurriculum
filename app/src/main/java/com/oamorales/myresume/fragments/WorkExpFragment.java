@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,13 +36,14 @@ public class WorkExpFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /** Se accede a la base de datos */
-        realm = Realm.getDefaultInstance();
+
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        /** Se accede a la base de datos */
+        realm = Realm.getDefaultInstance();
         binding = FragmentWorkExpBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         layoutManager = new LinearLayoutManager(requireActivity());
@@ -49,21 +52,21 @@ public class WorkExpFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //super.onViewCreated(view, savedInstanceState);
+        super.onViewCreated(view, savedInstanceState);
         /** Se crea la lista de WorkExp y se agregan los elementos obtenidos de la base de datos */
-        RealmResults<WorkExp> workExps = realm.where(WorkExp.class).findAll().sort("yearEnd", Sort.DESCENDING);
+        RealmResults<WorkExp> workExps = realm.where(WorkExp.class).findAllAsync().sort("endYear", Sort.DESCENDING);
         /** Se añade el layout manager */
         binding.workExpRecyclerView.setLayoutManager(layoutManager);
         /** Se crea el adaptador y se le añade al RecyclerView */
         binding.workExpRecyclerView.setAdapter(new WorkExpRecyclerAdapter(requireActivity(), R.layout.work_exp_card_view, workExps));
         /** Se captura la acción y se añade al evento onClick del FAB */
-        //NavDirections navDirections = DegreesFragmentDirections.actionDegreesFragmentToNewDegreeFragment();
-        //binding.fabNewDegree.setOnClickListener(Navigation.createNavigateOnClickListener(navDirections));
+        NavDirections navDirections = WorkExpFragmentDirections.actionWorkExpFragmentToNewWorkExpFragment();
+        binding.fabNewWorkExp.setOnClickListener(Navigation.createNavigateOnClickListener(navDirections));
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         /** Close DB connection */
         realm.close();
     }

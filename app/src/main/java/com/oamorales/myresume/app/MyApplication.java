@@ -31,6 +31,7 @@ public class MyApplication extends Application {
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("myrealm")
+                //Elimina la BD si requiere migración; solo para utilizarlo en fase de desarrollo
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(config);

@@ -12,8 +12,8 @@ public class WorkExp extends RealmObject {
     private String companyName;
     private String position;
     private String positionDesc;
-    private int yearBegin;
-    private int yearEnd;
+    private int startYear;
+    private int endYear;
 
     public WorkExp() {  }
 
@@ -22,8 +22,8 @@ public class WorkExp extends RealmObject {
         this.companyName = companyName;
         this.position = position;
         this.positionDesc = positionDesc;
-        this.yearBegin = yearBegin;
-        this.yearEnd = yearEnd;
+        this.startYear = yearBegin;
+        this.endYear = yearEnd;
     }
 
     public int getId() {
@@ -54,19 +54,19 @@ public class WorkExp extends RealmObject {
         this.positionDesc = positionDesc;
     }
 
-    public int getYearBegin() {
-        return yearBegin;
+    public int getStartYear() {
+        return startYear;
     }
 
-    public void setYearBegin(int yearBegin) {
-        this.yearBegin = yearBegin;
+    public void setStartYear(int startYear) {
+        this.startYear = startYear;
     }
 
-    public int getYearEnd() {
-        return yearEnd;
+    public int getEndYear() {
+        return endYear;
     }
 
-    public void setYearEnd(int yearEnd) {
-        this.yearEnd = yearEnd;
+    public void setEndYear(int endYear) {
+        this.endYear = endYear;
     }
 }

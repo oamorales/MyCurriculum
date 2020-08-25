@@ -80,7 +80,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/newWorkExpYearBeginLayout"
+            android:id="@+id/newWorkExpStartYearLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
@@ -88,32 +88,32 @@
             android:gravity="center"
             app:errorEnabled="true"
             android:hint="Año Inicio"
-            app:layout_constraintEnd_toStartOf="@+id/newWorkExpYearEndLayout"
+            app:layout_constraintEnd_toStartOf="@+id/newWorkExpEndYearLayout"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/newPositionDescriptionLayout">
 
             <AutoCompleteTextView
-                android:id="@+id/newWorkExpYearBegin"
+                android:id="@+id/newWorkExpStartYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/newWorkExpYearEndLayout"
+            android:id="@+id/newWorkExpEndYearLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:hint="Año Fin"
-            app:layout_constraintBaseline_toBaselineOf="@+id/newWorkExpYearBeginLayout"
+            app:layout_constraintBaseline_toBaselineOf="@+id/newWorkExpStartYearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.25"
-            app:layout_constraintStart_toEndOf="@+id/newWorkExpYearBeginLayout">
+            app:layout_constraintStart_toEndOf="@+id/newWorkExpStartYearLayout">
 
             <AutoCompleteTextView
-                android:id="@+id/newWorkExpYearEnd"
+                android:id="@+id/newWorkExpEndYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"/>
@@ -129,7 +129,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/newWorkExpYearEndLayout"
+            app:layout_constraintTop_toBottomOf="@+id/newWorkExpEndYearLayout"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

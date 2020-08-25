@@ -87,7 +87,7 @@ public class EditDegreeFragment extends Fragment implements View.OnClickListener
             years.add(year);
             year--;
         }
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(requireContext(), R.layout.degrees_list_years, years);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(requireContext(), R.layout.list_years, years);
         binding.editDegreeYearBegin.setAdapter(adapter);
         binding.editDegreeYearEnd.setAdapter(adapter);
         return view;
