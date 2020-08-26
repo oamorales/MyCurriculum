@@ -84,6 +84,9 @@
         <action
             android:id="@+id/action_workExpFragment_to_newWorkExpFragment"
             app:destination="@id/newWorkExpFragment" />
+        <action
+            android:id="@+id/action_workExpFragment_to_workExpDetailsFragment"
+            app:destination="@id/workExpDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/skillsFragment"
@@ -114,5 +117,26 @@
         android:name="com.oamorales.myresume.fragments.NewWorkExpFragment"
         android:label="fragment_new_work_exp"
         tools:layout="@layout/fragment_new_work_exp" />
+    <fragment
+        android:id="@+id/workExpDetailsFragment"
+        android:name="com.oamorales.myresume.fragments.WorkExpDetailsFragment"
+        android:label="fragment_work_exp_details"
+        tools:layout="@layout/fragment_work_exp_details" >
+        <action
+            android:id="@+id/action_workExpDetailsFragment_to_editWorkExpFragment"
+            app:destination="@id/editWorkExpFragment" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/editWorkExpFragment"
+        android:name="com.oamorales.myresume.fragments.EditWorkExpFragment"
+        android:label="fragment_edit_work_exp"
+        tools:layout="@layout/fragment_edit_work_exp" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

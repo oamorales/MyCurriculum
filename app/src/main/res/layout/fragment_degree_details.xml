@@ -30,10 +30,10 @@
                 android:paddingLeft="36dp"
                 android:paddingRight="36dp"
                 app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView"
+                app:layout_constraintHorizontal_bias="0.55"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.55"/>
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/degreeDetailLogo"
@@ -59,27 +59,27 @@
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/primaryText"
                 android:id="@+id/textDiscipline"
+                style="@style/primaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:text="@string/text_discipline"
-                app:layout_constraintTop_toBottomOf="@+id/degreeDetailUnivName"
                 app:layout_constraintBottom_toTopOf="@+id/degreeDiscipline"
+                app:layout_constraintHorizontal_bias="0.15"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.15"/>
+                app:layout_constraintTop_toBottomOf="@+id/degreeDetailUnivName"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/degreeDiscipline"
                 style="@style/secondaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
+                android:gravity="center"
                 app:layout_constraintBottom_toTopOf="@+id/textYearBegin"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -94,10 +94,10 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/text_year_begin"
                 app:layout_constraintBottom_toTopOf="@+id/degreeBeginYear"
-                app:layout_constraintTop_toBottomOf="@+id/degreeDiscipline"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/textYearEnd"
-                app:layout_constraintVertical_bias="0.8"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/degreeDiscipline"
+                app:layout_constraintVertical_bias="0.8" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textYearEnd"
@@ -106,9 +106,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/text_year_end"
                 app:layout_constraintBaseline_toBaselineOf="@+id/textYearBegin"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_bias="0.68"
                 app:layout_constraintLeft_toLeftOf="@+id/textYearBegin"
-                app:layout_constraintHorizontal_bias="0.68"/>
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/degreeBeginYear"
@@ -116,10 +116,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                app:layout_constraintRight_toLeftOf="@+id/degreeEndYear"
                 app:layout_constraintBottom_toTopOf="@+id/textAverage"
-                app:layout_constraintTop_toBottomOf="@+id/textYearBegin"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/degreeEndYear"
+                app:layout_constraintTop_toBottomOf="@+id/textYearBegin" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/degreeEndYear"
@@ -127,26 +127,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBaseline_toBaselineOf="@+id/degreeBeginYear"
-                app:layout_constraintStart_toStartOf="@+id/degreeBeginYear"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintHorizontal_bias="0.6"
                 app:layout_constraintLeft_toLeftOf="@+id/degreeBeginYear"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/degreeBeginYear"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/primaryText"
                 android:id="@+id/textAverage"
+                style="@style/primaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:text="@string/text_average"
                 app:layout_constraintBottom_toTopOf="@+id/degreeGradeAverage"
-                app:layout_constraintTop_toBottomOf="@+id/degreeBeginYear"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/degreeBeginYear"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -165,8 +165,8 @@
                 android:id="@+id/fabEditDegree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
                 android:layout_marginEnd="40dp"
+                android:layout_marginBottom="20dp"
                 android:src="@android:drawable/ic_menu_edit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>

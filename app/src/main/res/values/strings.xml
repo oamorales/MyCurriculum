@@ -26,4 +26,6 @@
     <string name="delete_message">¿Desea eliminar?</string>
     <string name="yes">SI</string>
     <string name="no">NO</string>
+    <string name="text_company">Company</string>
+    <string name="text_position">Position</string>
 </resources>

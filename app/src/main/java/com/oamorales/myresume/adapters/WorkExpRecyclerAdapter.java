@@ -14,11 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 import com.oamorales.myresume.R;
+import com.oamorales.myresume.fragments.WorkExpFragmentDirections;
 import com.oamorales.myresume.models.Degree;
 import com.oamorales.myresume.models.WorkExp;
 import com.oamorales.myresume.utils.DBManager;
@@ -71,9 +73,9 @@ public class WorkExpRecyclerAdapter extends RecyclerView.Adapter <WorkExpRecycle
             companyName.setText(workExp.getCompanyName());
             position.setText(workExp.getPosition());
             /** Se crea la acción para cambiar de fragment y se pasan los parámetros */
-            //DegreesFragmentDirections.ActionDegreesFragmentToDegreeDetailsFragment directions = DegreesFragmentDirections
-            //.actionDegreesFragmentToDegreeDetailsFragment(currentDegree.getId());
-            //itemView.setOnClickListener(Navigation.createNavigateOnClickListener(directions));
+            WorkExpFragmentDirections.ActionWorkExpFragmentToWorkExpDetailsFragment directions = WorkExpFragmentDirections
+                    .actionWorkExpFragmentToWorkExpDetailsFragment(workExp.getId());
+            itemView.setOnClickListener(Navigation.createNavigateOnClickListener(directions));
         }
 
         @Override
