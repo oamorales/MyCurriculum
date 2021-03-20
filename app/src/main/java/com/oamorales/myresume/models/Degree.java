@@ -8,22 +8,25 @@ import io.realm.annotations.PrimaryKey;
 public class Degree extends RealmObject {
     @PrimaryKey
     private int id;
-    private int imageLogo;
     private String degreeTittle;
     private String university;
     private String discipline;
+    private String startDate;
+    private String endDate;
     private int yearBegin;
     private int yearEnd;
     private float gradeAverage;
 
     public Degree() {  }
 
-    public Degree(int imageLogo, String degreeTittle, String university, String discipline, int yearBegin, int yearEnd, float gradeAverage) {
+    public Degree(String degreeTittle, String university, String discipline, String startDate,
+                  String endDate, int yearBegin, int yearEnd, float gradeAverage) {
         this.id = MyApplication.degreeId.incrementAndGet();
-        this.imageLogo = imageLogo;
         this.degreeTittle = degreeTittle;
         this.university = university;
         this.discipline = discipline;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.yearBegin = yearBegin;
         this.yearEnd = yearEnd;
         this.gradeAverage = gradeAverage;
@@ -31,14 +34,6 @@ public class Degree extends RealmObject {
 
     public int getId() {
         return id;
-    }
-
-    public int getImageLogo() {
-        return imageLogo;
-    }
-
-    public void setImageLogo(int imageLogo) {
-        this.imageLogo = imageLogo;
     }
 
     public String getDegreeTittle() {
@@ -87,5 +82,21 @@ public class Degree extends RealmObject {
 
     public void setGradeAverage(float gradeAverage) {
         this.gradeAverage = gradeAverage;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }
