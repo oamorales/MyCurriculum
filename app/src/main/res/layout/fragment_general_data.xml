@@ -8,100 +8,133 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/generalPersonLanguage"
+        app:layout_constraintStart_toStartOf="@+id/generalPersonLanguage">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/appCompatImageView2"
+            android:layout_width="@dimen/person_img_bckgnd_width"
+            android:layout_height="@dimen/person_img_bckgnd_height"
+            android:layout_marginTop="@dimen/person_img_margin"
+            android:layout_marginBottom="@dimen/person_img_margin"
+            android:background="@color/colorPrimaryDark"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@+id/generalPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/generalPersonImage"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="20dp"
+            android:layout_width="@dimen/person_img_width"
+            android:layout_height="@dimen/person_img_height"
+            android:layout_marginTop="@dimen/person_img_margin"
+            android:layout_marginBottom="@dimen/person_img_margin"
             android:background="#F0F0F0"
             android:scaleType="centerCrop"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/generalPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/generalPersonImageButton"
+            android:layout_width="@dimen/person_select_img_btn_width"
+            android:layout_height="@dimen/person_select_img_btn_height"
+            android:layout_marginTop="@dimen/person_select_img_margin_top"
+            android:background="@color/colorPrimaryDark"
+            android:padding="@dimen/person_select_img_btn_padding"
+            android:src="@android:drawable/ic_menu_camera"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/generalPersonName"
-            />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.77"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/generalPersonName"
+            style="@style/primaryText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/generalPersonImage"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="@dimen/person_name_margin_bottom"
+            android:hint="@string/my_name"
+            android:gravity="center"
             app:layout_constraintBottom_toTopOf="@+id/divider1"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generalPersonImage" />
 
         <View
             android:id="@+id/divider1"
-            android:layout_width="380dp"
-            android:layout_height="2dp"
-            android:background="@color/colorDivider"
-            app:layout_constraintTop_toBottomOf="@+id/generalPersonName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="@dimen/divider_width"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimaryDark"
             app:layout_constraintBottom_toTopOf="@+id/generalLastDegree"
-             />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generalPersonName" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/generalLastDegree"
+            style="@style/secondaryText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/divider1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/general_data_text_spacing"
+            android:layout_marginBottom="@dimen/general_data_text_spacing"
+            android:hint="@string/last_degree"
+            android:gravity="center"
             app:layout_constraintBottom_toTopOf="@+id/divider2"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider1" />
 
         <View
             android:id="@+id/divider2"
-            android:layout_width="380dp"
-            android:layout_height="2dp"
-            android:background="@color/colorDivider"
-            app:layout_constraintTop_toBottomOf="@+id/generalLastDegree"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="@dimen/divider_width"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toTopOf="@+id/generalCurrentJob"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/generalCurrentJob"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generalLastDegree" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/generalCurrentJob"
+            style="@style/secondaryText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/divider2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/general_data_text_spacing"
+            android:layout_marginBottom="@dimen/general_data_text_spacing"
+            android:hint="@string/last_work_exp"
+            android:gravity="center"
             app:layout_constraintBottom_toTopOf="@+id/divider3"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
         <View
             android:id="@+id/divider3"
-            android:layout_width="380dp"
-            android:layout_height="2dp"
-            android:background="@color/colorDivider"
-            app:layout_constraintTop_toBottomOf="@+id/generalCurrentJob"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="@dimen/divider_width"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toTopOf="@id/generalPersonLanguage"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/generalMotherLanguage"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generalCurrentJob" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/generalMotherLanguage"
+            android:id="@+id/generalPersonLanguage"
+            style="@style/secondaryText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/divider3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/general_data_text_spacing"
+            android:layout_marginBottom="@dimen/general_data_text_spacing"
+            android:hint="@string/language"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
