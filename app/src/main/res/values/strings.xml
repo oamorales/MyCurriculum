@@ -28,4 +28,7 @@
     <string name="no">NO</string>
     <string name="text_company">Company</string>
     <string name="text_position">Position</string>
+    <string name="save">GUARDAR</string>
+    <string name="required">Requerido</string>
+    <string name="language_exists">El lenguage ya existe</string>
 </resources>

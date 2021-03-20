@@ -75,7 +75,11 @@
         android:id="@+id/languagesFragment"
         android:name="com.oamorales.myresume.fragments.LanguagesFragment"
         android:label="@string/languages"
-        tools:layout="@layout/fragment_languages" />
+        tools:layout="@layout/fragment_languages" >
+        <action
+            android:id="@+id/action_languagesFragment_to_addEditLanguageFragment"
+            app:destination="@id/addEditLanguageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/workExpFragment"
         android:name="com.oamorales.myresume.fragments.WorkExpFragment"
@@ -137,6 +141,17 @@
         <argument
             android:name="id"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditLanguageFragment"
+        android:name="com.oamorales.myresume.fragments.AddEditLanguageFragment"
+        android:label="fragment_add_edit_language"
+        tools:layout="@layout/fragment_add_edit_language" >
+        <argument
+            android:name="language"
+            app:argType="string"
+            app:nullable="true"
+            />
     </fragment>
 
 </navigation>
