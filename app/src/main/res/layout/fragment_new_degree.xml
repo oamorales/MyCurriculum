@@ -11,16 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/newDegreeLogo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="80dp"
-            android:background="#F0F0F0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/newDegreeTitleLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -30,16 +20,17 @@
             android:layout_marginTop="50dp"
             android:layout_marginEnd="30dp"
             android:gravity="center"
-            android:hint="Título Universitario"
+            android:hint="@string/degree"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/newDegreeLogo">
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/newDegreeTitle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/form_text_size"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,7 +44,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
             android:gravity="center"
-            android:hint="Universidad"
+            android:hint="@string/university"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +53,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/newDegreeUniversity"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/form_text_size"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -75,7 +67,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
             android:gravity="center"
-            android:hint="Discipline"
+            android:hint="@string/text_discipline"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,77 +76,97 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/newDegreeDiscipline"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/form_text_size"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/newDegreeYearBeginLayout"
+            android:id="@+id/newDegreeStartDateLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center"
-            android:hint="Año Inicio"
-            android:inputType="phone"
             app:endIconMode="clear_text"
-            app:layout_constraintEnd_toStartOf="@+id/newDegreeYearEndLayout"
-            app:layout_constraintHorizontal_chainStyle="spread"
+            android:hint="@string/text_start_date"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/newDegreeDisciplineLayout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/newDegreeYearBegin"
-                android:layout_width="match_parent"
+                android:id="@+id/newDegreeStartDate"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2008" />
+                android:clickable="true"
+                android:focusable="false"
+                android:inputType="none"
+                android:minWidth="@dimen/form_min_width"
+                android:textSize="@dimen/form_text_size"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/newDegreeYearEndLayout"
+            android:id="@+id/newDegreeEndDateLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:gravity="center"
-            android:hint="Año Fin"
-            android:inputType="phone"
             app:endIconMode="clear_text"
-            app:layout_constraintBaseline_toBaselineOf="@+id/newDegreeYearBeginLayout"
+            android:hint="@string/text_end_date"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.25"
-            app:layout_constraintStart_toEndOf="@+id/newDegreeYearBeginLayout">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/newDegreeStartDateLayout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/newDegreeYearEnd"
-                android:layout_width="match_parent"
+                android:id="@+id/newDegreeEndDate"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2004" />
+                android:clickable="true"
+                android:focusable="false"
+                android:inputType="none"
+                android:minWidth="@dimen/form_min_width"
+                android:textSize="@dimen/form_text_size"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/newDegreeGradeAverageLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
             android:gravity="center"
-            android:hint="Promedio de calificaciones"
-            android:inputType="numberDecimal"
+            android:hint="@string/text_average"
             app:endIconMode="clear_text"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/newDegreeYearEndLayout">
+            app:layout_constraintTop_toBottomOf="@+id/newDegreeEndDateLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/newDegreeGradeAverage"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal"
+                android:minWidth="@dimen/form_min_width_average"
+                android:textSize="@dimen/form_text_size"/>
         </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/newDegreeSaveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:text="@string/save"
+            android:textSize="@dimen/form_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/newDegreeGradeAverageLayout"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
