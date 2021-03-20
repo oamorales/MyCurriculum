@@ -18,24 +18,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 import com.oamorales.myresume.R;
-import com.oamorales.myresume.fragments.DegreesFragmentDirections;
-import com.oamorales.myresume.models.Degree;
-import com.oamorales.myresume.viewmodels.DegreesViewModel;
+import com.oamorales.myresume.fragments.WorkExpFragmentDirections;
+import com.oamorales.myresume.models.WorkExp;
+import com.oamorales.myresume.viewmodels.WorkExpViewModel;
 
 import java.util.List;
 
-public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecyclerAdapter.ViewHolder> {
+public class WorkExpRecyclerAdapter extends RecyclerView.Adapter <WorkExpRecyclerAdapter.ViewHolder> {
 
     private Activity activity;
     private int layout;
-    private List<Degree> list;
-    private DegreesViewModel viewModel;
+    private List<WorkExp> list;
+    private WorkExpViewModel viewModel;
 
-    public DegreesRecyclerAdapter(Activity activity, int layout, List<Degree> list) {
+    public WorkExpRecyclerAdapter(Activity activity, int layout, List<WorkExp> list) {
         this.activity = activity;
         this.layout = layout;
         this.list = list;
-        viewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(DegreesViewModel.class);
+        viewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(WorkExpViewModel.class);
     }
 
     @NonNull
@@ -51,36 +51,35 @@ public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecycle
 
     @Override
     public int getItemCount() {
-        return this.list.size();
+        return list.size();
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
 
-        private MaterialTextView textViewDegree;
-        private MaterialTextView university;
+        private MaterialTextView companyName;
+        private MaterialTextView position;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.textViewDegree = itemView.findViewById(R.id.degreesCardViewDegree);
-            this.university = itemView.findViewById(R.id.degreesCardViewUniversity);
-            /** Assign context menu listener */
+            companyName = itemView.findViewById(R.id.workExpCardViewCompany);
+            position = itemView.findViewById(R.id.workExpCardViewPosition);
             itemView.setOnCreateContextMenuListener(this);
         }
 
-        public void bind(Degree currentDegree){
-            this.textViewDegree.setText(currentDegree.getDegreeTittle());
-            this.university.setText(currentDegree.getUniversity());
+        private void bind(WorkExp workExp){
+            companyName.setText(workExp.getCompanyName());
+            position.setText(workExp.getPosition());
             /** Se crea la acción para cambiar de fragment y se pasan los parámetros */
-            DegreesFragmentDirections.ActionDegreesFragmentToDegreeDetailsFragment directions = DegreesFragmentDirections
-                    .actionDegreesFragmentToDegreeDetailsFragment(currentDegree.getId());
+            WorkExpFragmentDirections.ActionWorkExpFragmentToWorkExpDetailsFragment directions = WorkExpFragmentDirections
+                    .actionWorkExpFragmentToWorkExpDetailsFragment(workExp.getId());
             itemView.setOnClickListener(Navigation.createNavigateOnClickListener(directions));
         }
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            Degree currentDegree = list.get(getAdapterPosition());
-            menu.setHeaderTitle(currentDegree.getDegreeTittle());
+            WorkExp currentWorkExp = list.get(getAdapterPosition());
+            menu.setHeaderTitle(currentWorkExp.getPosition());
             MenuInflater inflater = activity.getMenuInflater();
             inflater.inflate(R.menu.context_menu, menu);
             /** Assign onClick event to every menu item */
@@ -96,15 +95,15 @@ public class DegreesRecyclerAdapter extends RecyclerView.Adapter <DegreesRecycle
             return true;
         }
 
-        private void confirmDeletion(){
-            final Degree currentDegree = list.get(getAdapterPosition());
+        private void confirmDeletion() {
+            final WorkExp currentWorkExp = list.get(getAdapterPosition());
             MaterialAlertDialogBuilder materialBuilder = new MaterialAlertDialogBuilder(activity);
-            materialBuilder.setTitle(currentDegree.getDegreeTittle())
+            materialBuilder.setTitle(currentWorkExp.getPosition())
                     .setMessage(R.string.delete_message)
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            viewModel.removeDegree(currentDegree);
+                            viewModel.removeWorkExp(currentWorkExp);
                             notifyItemRemoved(getAdapterPosition());
                         }
                     })
