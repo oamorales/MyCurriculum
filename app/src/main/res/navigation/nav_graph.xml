@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/generalDataFragment"
         android:name="com.oamorales.myresume.fragments.GeneralDataFragment"
-        android:label="fragment_general_data"
-        tools:layout="@layout/fragment_general_data" >
+        android:label="@string/general_data"
+        tools:layout="@layout/fragment_general_data">
         <action
             android:id="@+id/action_generalDataFragment_to_personInfoFragment"
             app:destination="@id/personInfoFragment" />
@@ -31,8 +31,8 @@
     <fragment
         android:id="@+id/personInfoFragment"
         android:name="com.oamorales.myresume.fragments.PersonInfoFragment"
-        android:label="fragment_person_info"
-        tools:layout="@layout/fragment_person_info" >
+        android:label="@string/personal_info"
+        tools:layout="@layout/fragment_person_info">
         <action
             android:id="@+id/action_personInfoFragment_to_personInfoEditFragment"
             app:destination="@id/personInfoEditFragment" />
@@ -61,22 +61,44 @@
     <fragment
         android:id="@+id/degreeDetailsFragment"
         android:name="com.oamorales.myresume.fragments.DegreeDetailsFragment"
-        android:label="fragment_degree_details"
-        tools:layout="@layout/fragment_degree_details" >
+        android:label="@string/degree_details"
+        tools:layout="@layout/fragment_degree_details">
         <argument
-            android:name="degree_tittle"
-            app:argType="string"/>
+            android:name="degree_id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_degreeDetailsFragment_to_editDegreeFragment"
+            app:destination="@id/editDegreeFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/languagesFragment"
         android:name="com.oamorales.myresume.fragments.LanguagesFragment"
         android:label="@string/languages"
-        tools:layout="@layout/fragment_languages" />
+        tools:layout="@layout/fragment_languages" >
+        <action
+            android:id="@+id/action_languagesFragment_to_editLanguageFragment"
+            app:destination="@id/editLanguageFragment" />
+        <action
+            android:id="@+id/action_languagesFragment_to_newLanguageFragment"
+            app:destination="@id/newLanguageFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/workExpFragment"
         android:name="com.oamorales.myresume.fragments.WorkExpFragment"
         android:label="@string/working_experience"
-        tools:layout="@layout/fragment_work_exp" />
+        tools:layout="@layout/fragment_work_exp" >
+        <action
+            android:id="@+id/action_workExpFragment_to_newWorkExpFragment"
+            app:destination="@id/newWorkExpFragment" />
+        <action
+            android:id="@+id/action_workExpFragment_to_workExpDetailsFragment"
+            app:destination="@id/workExpDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/skillsFragment"
         android:name="com.oamorales.myresume.fragments.SkillsFragment"
@@ -85,12 +107,61 @@
     <fragment
         android:id="@+id/newDegreeFragment"
         android:name="com.oamorales.myresume.fragments.NewDegreeFragment"
-        android:label="fragment_new_degree"
+        android:label="@string/new_degree"
         tools:layout="@layout/fragment_new_degree" />
     <fragment
         android:id="@+id/personInfoEditFragment"
         android:name="com.oamorales.myresume.fragments.PersonInfoEditFragment"
-        android:label="Person Info Edit"
+        android:label="@string/edit_person_info"
         tools:layout="@layout/fragment_person_info_edit" />
+    <fragment
+        android:id="@+id/editDegreeFragment"
+        android:name="com.oamorales.myresume.fragments.EditDegreeFragment"
+        android:label="@string/edit_degree"
+        tools:layout="@layout/fragment_edit_degree">
+        <argument
+            android:name="degree_id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/newWorkExpFragment"
+        android:name="com.oamorales.myresume.fragments.NewWorkExpFragment"
+        android:label="@string/new_work_exp"
+        tools:layout="@layout/fragment_new_work_exp" />
+    <fragment
+        android:id="@+id/workExpDetailsFragment"
+        android:name="com.oamorales.myresume.fragments.WorkExpDetailsFragment"
+        android:label="@string/work_exp_details"
+        tools:layout="@layout/fragment_work_exp_details">
+        <action
+            android:id="@+id/action_workExpDetailsFragment_to_editWorkExpFragment"
+            app:destination="@id/editWorkExpFragment" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/editWorkExpFragment"
+        android:name="com.oamorales.myresume.fragments.EditWorkExpFragment"
+        android:label="@string/edit_work_exp"
+        tools:layout="@layout/fragment_edit_work_exp">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/editLanguageFragment"
+        android:name="com.oamorales.myresume.fragments.EditLanguageFragment"
+        android:label="@string/edit_language"
+        tools:layout="@layout/fragment_edit_language">
+        <argument
+            android:name="language"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/newLanguageFragment"
+        android:name="com.oamorales.myresume.fragments.NewLanguageFragment"
+        android:label="@string/new_language"
+        tools:layout="@layout/fragment_new_language" />
 
 </navigation>
