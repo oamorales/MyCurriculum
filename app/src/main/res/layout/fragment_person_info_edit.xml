@@ -1,212 +1,230 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.oamorales.myresume.fragments.PersonInfoEditFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField1"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Nombre"
-            app:endIconMode="clear_text"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/person_name"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             >
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editPersonName"
                 android:layout_width="wrap_content"
-                android:minWidth="200dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/form_text_size"
+                android:minWidth="@dimen/form_min_width" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField2"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Fecha Nacimiento"
-            app:endIconMode="clear_text"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/textField1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/birthday"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textField1"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editPersonBirth"
-                android:focusable="false"
-                android:clickable="true"
-                android:inputType="date"
                 android:layout_width="wrap_content"
-                android:minWidth="200dp"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false"
+                android:inputType="date"
+                android:textSize="@dimen/form_text_size"
+                android:minWidth="@dimen/form_min_width"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField3"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            app:endIconMode="clear_text"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/textField2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/email"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textField2"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editPersonEmail"
                 android:layout_width="wrap_content"
-                android:minWidth="200dp"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/form_text_size"
+                android:minWidth="@dimen/form_min_width"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField4"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Teléfono"
-            app:endIconMode="clear_text"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/textField3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/phone"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textField3"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editPersonPhone"
                 android:layout_width="wrap_content"
-                android:minWidth="200dp"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/form_text_size"
+                android:minWidth="@dimen/form_min_width"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField5"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Ubicación"
-            app:endIconMode="clear_text"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/textField4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/address"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textField4"
             >
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editPersonLocation"
+                android:id="@+id/editPersonAddress"
                 android:layout_width="wrap_content"
-                android:minWidth="200dp"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/form_text_size"
+                android:minWidth="@dimen/form_min_width"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField6"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Facebook"
-            app:endIconMode="clear_text"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/textField5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/facebook"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textField5"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editPersonFacebook"
                 android:layout_width="wrap_content"
-                android:minWidth="200dp"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/form_text_size"
+                android:minWidth="@dimen/form_min_width"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField7"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Twitter"
-            app:endIconMode="clear_text"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/textField6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/twitter"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textField6"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editPersonTwitter"
                 android:layout_width="wrap_content"
-                android:minWidth="200dp"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/form_text_size"
+                android:minWidth="@dimen/form_min_width"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField8"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Instagram"
-            app:endIconMode="clear_text"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/textField7"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/instagram"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textField7"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editPersonInstagram"
                 android:layout_width="wrap_content"
-                android:minWidth="200dp"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/form_text_size"
+                android:minWidth="@dimen/form_min_width"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField9"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Skype"
-            app:endIconMode="clear_text"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
-            app:layout_constraintTop_toBottomOf="@+id/textField8"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:gravity="center"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/skype"
+            app:endIconMode="clear_text"
+            app:layout_constraintBottom_toTopOf="@+id/personSaveBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textField8"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editPersonSkype"
                 android:layout_width="wrap_content"
-                android:minWidth="200dp"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/form_text_size"
+                android:minWidth="@dimen/form_min_width"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/personSaveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="@string/save"
+            android:textSize="@dimen/form_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textField9"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.core.widget.NestedScrollView>

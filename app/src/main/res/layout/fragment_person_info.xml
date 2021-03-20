@@ -1,91 +1,335 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center|top"
     tools:context=".fragments.PersonInfoFragment">
 
-
-    <TextView
-        android:id="@+id/nameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/my_name"
-        android:layout_marginTop="40dp"
-        android:textSize="18sp"
-        />
-    <TextView
-        android:id="@+id/degreeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/degree"
-        android:layout_marginTop="15dp"
-        />
-    <TextView
-        android:id="@+id/careerTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/profesion"
-        android:layout_marginTop="15dp"
-        />
-    <TextView
-        android:id="@+id/addressTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/address"
-        android:layout_marginTop="15dp"
-        />
-    <TextView
-        android:id="@+id/cellphoneTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cellphone"
-        android:layout_marginTop="15dp"
-        />
-
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="start"
-        android:layout_marginTop="10dp"
-        >
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/social_media"
-            android:layout_marginTop="15dp"
-            android:background="@color/colorPrimary"
-            android:layout_marginStart="15dp"
-            android:padding="5dp"
-            />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/personNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:hint="@string/person_name"
+                android:textSize="@dimen/primary_text"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/divider1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/twitterTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/address"
-        android:layout_marginTop="15dp"
-        />
-    <TextView
-        android:id="@+id/instagramTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cellphone"
-        android:layout_marginTop="15dp"
-        />
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="@dimen/person_info_separator"
+                android:layout_height="1dp"
+                android:background="@color/colorDivider"
+                app:layout_constraintBottom_toTopOf="@+id/birthDateTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/personNameTextView" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_birth_outlined_light"
+                app:layout_constraintBottom_toTopOf="@+id/divider2"
+                app:layout_constraintEnd_toStartOf="@+id/birthDateTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider1"
+                 />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/birthDateTextView"
+                style="@style/secondaryText"
+                android:layout_width="@dimen/person_info_text_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:hint="@string/birthday"
+                app:layout_constraintBottom_toTopOf="@+id/divider2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider1" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="@dimen/person_info_separator"
+                android:layout_height="1dp"
+                android:background="@color/colorDivider"
+                app:layout_constraintBottom_toTopOf="@+id/emailTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/birthDateTextView" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_email_outlined_light"
+                app:layout_constraintBottom_toTopOf="@+id/divider3"
+                app:layout_constraintEnd_toStartOf="@+id/emailTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider2"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/emailTextView"
+                style="@style/secondaryText"
+                android:layout_width="@dimen/person_info_text_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:hint="@string/email"
+                app:layout_constraintBottom_toTopOf="@+id/divider3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="@dimen/person_info_separator"
+                android:layout_height="1dp"
+                android:background="@color/colorDivider"
+                app:layout_constraintBottom_toTopOf="@+id/phoneTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailTextView" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_phone_outlined_light"
+                app:layout_constraintBottom_toTopOf="@+id/divider4"
+                app:layout_constraintEnd_toStartOf="@+id/phoneTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider3"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/phoneTextView"
+                style="@style/secondaryText"
+                android:layout_width="@dimen/person_info_text_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:hint="@string/phone"
+                app:layout_constraintBottom_toTopOf="@+id/divider4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="@dimen/person_info_separator"
+                android:layout_height="1dp"
+                android:background="@color/colorDivider"
+                app:layout_constraintBottom_toTopOf="@+id/addressTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneTextView" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_address_outlined_light"
+                app:layout_constraintBottom_toTopOf="@+id/divider5"
+                app:layout_constraintEnd_toStartOf="@+id/addressTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider4"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/addressTextView"
+                style="@style/secondaryText"
+                android:layout_width="@dimen/person_info_text_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:hint="@string/address"
+                app:layout_constraintBottom_toTopOf="@+id/divider5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider4" />
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="@dimen/person_info_separator"
+                android:layout_height="1dp"
+                android:background="@color/colorDivider"
+                app:layout_constraintBottom_toTopOf="@+id/facebookTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addressTextView" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_facebook_outlined"
+                app:layout_constraintBottom_toTopOf="@+id/divider6"
+                app:layout_constraintEnd_toStartOf="@+id/facebookTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider5"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/facebookTextView"
+                style="@style/secondaryText"
+                android:layout_width="@dimen/person_info_text_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:hint="@string/facebook"
+                app:layout_constraintBottom_toTopOf="@+id/divider6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider5" />
+
+            <View
+                android:id="@+id/divider6"
+                android:layout_width="@dimen/person_info_separator"
+                android:layout_height="1dp"
+                android:background="@color/colorDivider"
+                app:layout_constraintBottom_toTopOf="@+id/twitterTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/facebookTextView" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_twitter_outlined_light"
+                app:layout_constraintBottom_toTopOf="@+id/divider7"
+                app:layout_constraintEnd_toStartOf="@+id/facebookTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider6"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/twitterTextView"
+                style="@style/secondaryText"
+                android:layout_width="@dimen/person_info_text_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:hint="@string/twitter"
+                app:layout_constraintBottom_toTopOf="@+id/divider7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider6" />
+
+            <View
+                android:id="@+id/divider7"
+                android:layout_width="@dimen/person_info_separator"
+                android:layout_height="1dp"
+                android:background="@color/colorDivider"
+                app:layout_constraintBottom_toTopOf="@+id/instagramTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/twitterTextView" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_instagram_outlined_light"
+                app:layout_constraintBottom_toTopOf="@+id/divider8"
+                app:layout_constraintEnd_toStartOf="@+id/instagramTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider7"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/instagramTextView"
+                style="@style/secondaryText"
+                android:layout_width="@dimen/person_info_text_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:hint="@string/instagram"
+                app:layout_constraintBottom_toTopOf="@+id/divider8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider7" />
+
+            <View
+                android:id="@+id/divider8"
+                android:layout_width="@dimen/person_info_separator"
+                android:layout_height="1dp"
+                android:background="@color/colorDivider"
+                app:layout_constraintBottom_toTopOf="@+id/skypeTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/instagramTextView" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_skype_outlined_light"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/skypeTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider8"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/skypeTextView"
+                style="@style/secondaryText"
+                android:layout_width="@dimen/person_info_text_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:hint="@string/skype"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider8" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/personInfoFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="60dp"
-        android:src="@drawable/ic_edit_filled_light"/>
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin_end"
+        android:layout_marginBottom="@dimen/fab_margin_bottom"
+        android:src="@drawable/ic_edit_filled_light"
+        android:visibility="visible" />
 
-</LinearLayout>
+</FrameLayout>
+
+

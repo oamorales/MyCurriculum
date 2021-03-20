@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/colorSplash"/>
+    <item android:drawable="@color/colorPrimaryDark"/>
     <item>
         <bitmap
-            android:src="@drawable/ic_oamm_white"
+            android:src="@drawable/img_splash"
             android:gravity="center"
             />
     </item>
