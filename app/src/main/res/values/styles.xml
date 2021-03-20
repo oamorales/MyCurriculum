@@ -10,24 +10,28 @@
     
     <style name="SplashScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash</item>
-
     </style>
-    <style name="universityName">
-        <item name="color">@color/colorTextIcons</item>
-        <item name="android:textSize">24sp</item>
+
+    <style name="tittleText">
+        <item name="android:textColor">@color/colorTextIcons</item>
+        <item name="android:textSize">@dimen/tittle_text</item>
         <item name="android:textStyle">bold</item>
-        <item name="fontFamily">serif</item>
+        <item name="fontFamily">sans-serif-condensed</item>
     </style>
     <style name="primaryText">
-        <item name="color">@color/colorPrimaryText</item>
-        <item name="android:textSize">18sp</item>
-        <item name="fontFamily">serif</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textSize">@dimen/primary_text</item>
+        <item name="fontFamily">sans-serif-condensed-medium</item>
         <item name="android:textStyle">bold</item>
+        <item name="backgroundColor">@color/colorTextIcons</item>
     </style>
     <style name="secondaryText">
-        <item name="color">@color/colorSecondaryText</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textSize">@dimen/secondary_text</item>
         <item name="fontFamily">serif</item>
+    </style>
+    <style name="roundImage">
+        <item name="background">@drawable/round_shape</item>
     </style>
 
     <!-- Theme.AppCompat.Light.NoActionBar -->
