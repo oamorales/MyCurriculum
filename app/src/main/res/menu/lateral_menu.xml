@@ -2,6 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single"
+        android:id="@+id/group">
+    <item
+        android:id="@+id/generalDataFragment"
+        android:title="@string/general_data"
+        />
+    </group>
+    <group android:checkableBehavior="single"
         android:id="@+id/group1">
         <item
             android:id="@+id/personInfoFragment"

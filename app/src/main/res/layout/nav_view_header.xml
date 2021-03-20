@@ -14,16 +14,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/image_background"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/my_name"
-            android:textSize="18sp"
-            android:layout_gravity="bottom"
-            android:textStyle="bold"
-            android:textColor="#FFF"
-            android:layout_margin="10dp"/>
-
     </FrameLayout>
 
 </LinearLayout>
