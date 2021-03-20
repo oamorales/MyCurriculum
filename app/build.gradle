@@ -3,11 +3,11 @@ apply plugin: 'realm-android'
 apply plugin: "androidx.navigation.safeargs"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.oamorales.mycurriculum"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -18,24 +18,34 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0'
-    def nav_version = "2.3.0-rc01"
+    implementation 'com.google.android.material:material:1.4.0-alpha01'
+    def nav_version = "2.3.3"
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    //Android-Image-Cropper
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    //iTextpdf
+    implementation files('libs/itextpdf-5.5.13.2/itextpdf-5.5.13.2.jar')
+    //xmlWorker
+    implementation files('libs/xmlworker-5.5.13.2/xmlworker-5.5.13.2.jar')
 }
