@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.oamorales.myresume">
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality.
-    -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera2.CameraDevice"
+        android:required="false"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name="com.oamorales.myresume.app.MyApplication"
@@ -16,6 +16,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        
+        <provider
+            android:authorities="com.oamorales.myresume.provider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths">
+            </meta-data>
+        </provider>
+        
         <activity android:name="com.oamorales.myresume.splash.SplashActivity"
             android:theme="@style/SplashScreen"
             >
@@ -25,33 +37,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.oamorales.myresume.activities.SkillsActivity"
-            android:theme="@style/AppTheme"/>
-        <activity android:name="com.oamorales.myresume.activities.WorkExpActivity" />
-        <activity android:name="com.oamorales.myresume.activities.DegreesActivity"
-            android:theme="@style/AppTheme"/>
-        <activity android:name="com.oamorales.myresume.activities.LanguagesActivity" />
-        <activity android:name="com.oamorales.myresume.activities.PersonInfoActivity" />
-        <activity android:name="com.oamorales.myresume.activities.DegreeDetails" />
         <activity android:name="com.oamorales.myresume.activities.MainActivity"
-            android:theme="@style/AppTheme">
-
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
         </activity>
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
 
-        <activity
-            android:name="com.oamorales.myresume.MapsActivity"
-            android:label="@string/title_activity_maps" />
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
     </application>
 
 </manifest>
