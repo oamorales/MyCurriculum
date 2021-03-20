@@ -3,6 +3,7 @@ package com.oamorales.myresume.app;
 import android.app.Application;
 
 import com.oamorales.myresume.models.Degree;
+import com.oamorales.myresume.models.WorkExp;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,14 +15,15 @@ import io.realm.RealmResults;
 public class MyApplication extends Application {
 
     public static AtomicInteger degreeId = new AtomicInteger();
+    public static AtomicInteger workExpId = new AtomicInteger();
 
     @Override
     public void onCreate() {
         super.onCreate();
-        //SystemClock.sleep(2000);
         configureRealm();
         Realm realm = Realm.getDefaultInstance();
         degreeId = getIdByTable(realm, Degree.class);
+        workExpId = getIdByTable(realm, WorkExp.class);
         realm.close();
     }
 
@@ -29,7 +31,9 @@ public class MyApplication extends Application {
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("myrealm")
-                .deleteRealmIfMigrationNeeded()
+                //Elimina la BD si requiere migración; solo para utilizarlo en fase de desarrollo
+                //.deleteRealmIfMigrationNeeded()
+                //.schemaVersion(0)
                 .build();
         Realm.setDefaultConfiguration(config);
     }
